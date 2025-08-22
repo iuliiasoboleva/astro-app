@@ -1,22 +1,56 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  :root { color-scheme: dark; }
+:root {
+  --font-inter: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-sfpro: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
 
   *, *::before, *::after { box-sizing: border-box; }
 
   html, body, #root { height: 100%; }
 
+  body, h1, h2, h3, h4, h5, h6,
+  p, figure, blockquote, dl, dd,
+  ul, ol, menu { margin: 0; }
+
   body {
-    margin: 0;
-    background: white;
-    color: black;
-    font-family: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  font-family: var(--font-inter);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.3; 
+    color: #ffffff; 
+    background: #ffffff;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  ul[role="list"],
+  ol[role="list"],
+  ul, ol { list-style: none; padding-left: 0; }
+
   a { color: inherit; text-decoration: none; }
-  button { font: inherit; cursor: pointer; }
-  ::selection { background: white; color: #fff; }
+
+  button, input, optgroup, select, textarea {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    background: transparent;
+  }
+
+  button {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, select, textarea {
+  font-size: 14px;
+}
 `;
