@@ -21,7 +21,7 @@ export const Bar = styled.nav`
   border-top: 1px solid #e8eef5;
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span.attrs({ className: 'icon' })`
   width: 24px;
   height: 24px;
   background: #c1d0de;
@@ -29,7 +29,7 @@ export const Icon = styled.span`
   -webkit-mask: url(${(p) => p.$src}) center / contain no-repeat;
 `;
 
-export const Label = styled.span`
+export const Label = styled.span.attrs({ className: 'label' })`
   font-family: var(--font-sfpro);
   font-size: 12px;
   font-weight: 400;
@@ -58,6 +58,13 @@ export const Item = styled(NavLink)`
     background: linear-gradient(180deg, #0b1b24 0%, #203a46 55%, #2f4a56 100%);
   }
   &[aria-current='page'] ${Label} {
+    color: #1f3541;
+  }
+
+  &[data-active='true'] ${Icon} {
+    background: linear-gradient(180deg, #0b1b24 0%, #203a46 55%, #2f4a56 100%);
+  }
+  &[data-active='true'] ${Label} {
     color: #1f3541;
   }
 `;

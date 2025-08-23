@@ -2,13 +2,15 @@ import React from 'react';
 
 import { Btn, Card, Text, Title } from './styles';
 
-const HomeCard = ({ title, text, img, buttonText = 'Перейти', tone }) => (
-  <Card $bg={img} $tone={tone}>
+const HomeCard = ({ title, text, img, buttonText = 'Перейти', tone, onClick }) => (
+  <Card $bg={img} $tone={tone} onClick={onClick}>
     <div>
       <Title $tone={tone}>{title}</Title>
       <Text $tone={tone}>{text}</Text>
     </div>
-    <Btn $tone={tone}>{buttonText}</Btn>
+    <Btn $tone={tone} onClick={onClick}>
+      {buttonText}
+    </Btn>
   </Card>
 );
 

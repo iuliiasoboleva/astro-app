@@ -1,21 +1,26 @@
 import styled from 'styled-components';
 
+const TAB_BAR_HEIGHT = 84;
+
 export const AppWrap = styled.div`
   max-width: 420px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: calc(var(--vh, 1vh) * 100);
-  padding-top: env(safe-area-inset-top);
+
+  min-height: 100svh;
+  @supports (min-height: 100dvh) {
+    min-height: 100dvh;
+  }
 `;
 
-export const Content = styled.div`
+export const Content = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
+
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-`;
-export const TabSpacer = styled.div`
-  height: calc(72px + env(safe-area-inset-bottom, 0px));
+
+  padding-bottom: calc(${TAB_BAR_HEIGHT}px + env(safe-area-inset-bottom, 0px));
 `;

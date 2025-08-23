@@ -5,7 +5,6 @@ import model from '../../assets/images/model-full.png';
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background:
     url(${model}) right -5px top 18px / auto 100% no-repeat,
     radial-gradient(34% 28% at 82% -10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),

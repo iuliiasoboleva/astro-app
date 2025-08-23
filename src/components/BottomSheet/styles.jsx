@@ -1,0 +1,85 @@
+import styled, { css, keyframes } from 'styled-components';
+
+const ENTER_MS = 240;
+const EXIT_MS = 240;
+
+const fadeIn = keyframes`
+  from { opacity: 0 }
+  to   { opacity: 1 }
+`;
+const fadeOut = keyframes`
+  from { opacity: 1 }
+  to   { opacity: 0 }
+`;
+
+const slideIn = keyframes`
+  from { transform: translate3d(0, 100%, 0) }
+  to   { transform: translate3d(0, 0, 0) }
+`;
+const slideOut = keyframes`
+  from { transform: translate3d(0, 0, 0) }
+  to   { transform: translate3d(0, 100%, 0) }
+`;
+
+export const Container = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1100; /* выше таб-бара */
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 30, 40, 0.45);
+  animation: ${fadeIn} ${ENTER_MS}ms ease both;
+
+  ${({ $exiting }) =>
+    $exiting &&
+    css`
+      animation: ${fadeOut} ${EXIT_MS}ms ease both;
+    `}
+`;
+
+export const Sheet = styled.section`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 420px;
+
+  background: #fff;
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -10px 28px rgba(15, 30, 40, 0.12);
+
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  height: ${(p) => p.$height};
+  max-height: ${(p) => p.$maxHeight};
+  overflow: auto;
+
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  contain: paint;
+  touch-action: none;
+
+  transition: transform 0.18s ease;
+
+  animation: ${slideIn} ${ENTER_MS}ms ease both;
+
+  ${({ $exiting }) =>
+    $exiting &&
+    css`
+      pointer-events: none;
+      overflow: hidden;
+      animation: ${slideOut} ${EXIT_MS}ms ease both;
+    `}
+`;
+
+export const DragHandle = styled.div`
+  width: 42px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 6px auto 12px;
+`;

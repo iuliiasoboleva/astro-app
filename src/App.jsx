@@ -7,7 +7,8 @@ import userIcon from './assets/icons/profile.svg';
 import BottomTabs from './components/BottomTabs';
 import ScrollToTop from './hooks/ScrollToTop';
 import Home from './pages/Home';
-import { AppWrap, Content, TabSpacer } from './styles';
+import Tarot from './pages/Tarot';
+import { AppWrap, Content } from './styles';
 
 const TABS = [
   { to: '/', label: 'Главная', icon: homeIcon },
@@ -23,7 +24,6 @@ function Layout() {
         <Outlet />
       </Content>
 
-      <TabSpacer />
       <BottomTabs items={TABS} />
     </AppWrap>
   );
@@ -34,6 +34,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="tarot" element={<Tarot />} />
         <Route path="history" element={<div>История (заглушка)</div>} />
         <Route path="profile" element={<div>Профиль (заглушка)</div>} />
       </Route>

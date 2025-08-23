@@ -1,3 +1,4 @@
+// styles.js
 import styled, { css } from 'styled-components';
 
 export const Card = styled.button`
@@ -5,24 +6,27 @@ export const Card = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  width: 100%;
   max-width: 175px;
   height: 226px;
-  width: 100%;
+
   padding: 16px;
   border-radius: 17px;
+  border: 3px solid #ffffff;
   overflow: hidden;
   text-align: left;
-  border: 0;
+  background:
+    url(${(p) => p.$bg}) bottom / contain no-repeat,
+    linear-gradient(135deg, #f6fbff 0%, #f9f9f9 25%, #e2f0fa 55%, #91bde2 100%);
+
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   user-select: none;
+
   transition:
     transform 0.15s ease,
     filter 0.15s ease,
     box-shadow 0.2s ease;
-
-  background:
-    url(${(p) => p.$bg}) center / contain no-repeat,
-    linear-gradient(135deg, #f6fbff 0%, #f9f9f9 25%, #e2f0fa 55%, #91bde2 100%);
 
   &:active:not(:disabled) {
     transform: translateY(1px);
@@ -41,22 +45,32 @@ export const Card = styled.button`
     `}
 `;
 
-export const BottomBlock = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 export const Title = styled.div`
   position: relative;
   z-index: 1;
+
   font-family: var(--font-sfpro);
-  white-space: pre-line;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  color: ${({ status }) => (status === 'locked' ? '#6A6A6A' : '#437693')};
+
+  white-space: pre-line;
+  color: ${({ $status }) => ($status === 'locked' ? '#6A6A6A' : '#437693')};
+`;
+
+export const BottomBlock = styled.div`
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 8px;
+
+  > * {
+    min-width: 0;
+  }
 `;
 
 export const Pill = styled.span`
@@ -64,29 +78,34 @@ export const Pill = styled.span`
   align-items: center;
   justify-content: center;
   gap: 8px;
-
+  width: fit-content;
   min-height: 28px;
   padding: 4px 8px;
   border-radius: 35px;
 
-  font: 500 12px/1 var(--font-sfpro);
+  font-family: var(--font-sfpro);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
   letter-spacing: -0.03em;
 
-  background: #fff;
+  background: #ffffff;
   color: ${({ $status }) => ($status === 'locked' ? '#848484' : '#4F93C9')};
-  vertical-align: middle;
 `;
 
 export const CornerBadge = styled.div`
+  justify-self: end;
   z-index: 2;
+
   width: 28px;
   height: 28px;
-  border-radius: 35px;
   padding: 4px;
+  border-radius: 35px;
   background: #ffffff;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   ${({ $status }) =>
     $status === 'locked'

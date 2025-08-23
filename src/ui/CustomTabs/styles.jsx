@@ -8,6 +8,7 @@ export const Wrap = styled.div`
   padding: 2px;
   border-radius: 50px;
   background: #e2eaf1;
+  width: fit-content;
 `;
 
 export const Indicator = styled.div`
@@ -29,7 +30,7 @@ export const TabBtn = styled.button`
   z-index: 1;
   border: 1px solid transparent;
   border-radius: 50px;
-  padding: 10px 20px;
+  padding: 10px 12px;
   color: #8398a9;
   background: transparent;
   transition: color 0.15s ease;
@@ -50,5 +51,9 @@ export const TabBtn = styled.button`
   &:focus-visible {
     outline: 2px solid rgba(53, 115, 255, 0.5);
     outline-offset: 2px;
+  }
+
+  @media (max-width: 345px) {
+    font-size: 14px;
   }
 `;
