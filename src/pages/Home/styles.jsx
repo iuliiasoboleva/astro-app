@@ -1,47 +1,37 @@
 import styled from 'styled-components';
 
-import model from '../../assets/images/modelHome.png';
+import model from '../../assets/images/model-full.png';
 
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: linear-gradient(90deg, #c9e8fd 0%, #d1eafc 100%);
+  height: 100vh;
+  background:
+    url(${model}) right -5px top 18px / auto 100% no-repeat,
+    radial-gradient(34% 28% at 82% -10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(
+      200deg,
+      rgba(255, 255, 255, 0) 0% 58%,
+      rgba(255, 255, 255, 0.9) 78%,
+      #ffffff 100%
+    ),
+    radial-gradient(62% 58% at 25% 15%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, #4f87c6 0%, #8fbbe3 34%, #cfe8fb 62%, #f5fbff 100%);
 `;
 
 export const Hero = styled.header`
   position: relative;
+  min-height: 306px;
   height: 100%;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  background:
-    url(${model}) right 5px top 18px / 276px auto no-repeat,
-    radial-gradient(
-      420px 360px at 82% -40px,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0) 60%
-    ),
-    linear-gradient(
-      198deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 56%,
-      #c9e7fc 76%,
-      #c9e7fc 100%
-    ),
-    radial-gradient(
-      520px 520px at 22% 12%,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0) 62%
-    ),
-    linear-gradient(180deg, #4f87c6 0%, #8fbbe3 34%, #cfe8fb 62%, #f5fbff 100%);
 `;
 
 export const SoftBlock = styled.div`
   border-radius: 35px 35px 0 0;
-  border-top: 1px solid #fff;
   background: linear-gradient(180deg, #f9fcff 0%, #fff 100%);
-  height: 65%;
+  height: 100%;
   flex-shrink: 0;
   margin-top: auto;
   padding: 15px;

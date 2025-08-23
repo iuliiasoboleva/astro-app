@@ -4,9 +4,14 @@ export const GlobalStyle = createGlobalStyle`
 :root {
   --font-inter: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-sfpro: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --vh: 1vh;
 }
 
   *, *::before, *::after { box-sizing: border-box; }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 
   html, body, #root { height: 100%; }
 
@@ -24,6 +29,8 @@ export const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+   overscroll-behavior: none;
   }
 
   ul[role="list"],

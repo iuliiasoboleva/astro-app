@@ -2,25 +2,15 @@ import React from 'react';
 
 import { Bar, Icon, Item, Label } from './styles';
 
-const BottomTabs = ({ items = [], value, onChange, className }) => {
+const BottomTabs = ({ items = [], className }) => {
   return (
     <Bar role="tablist" aria-label="Главное меню" className={className}>
-      {items.map((it) => {
-        const active = it.value === value;
-        return (
-          <Item
-            key={it.value}
-            role="tab"
-            aria-selected={active}
-            tabIndex={active ? 0 : -1}
-            $active={active}
-            onClick={() => onChange?.(it.value)}
-          >
-            <Icon $src={it.icon} $active={active} aria-hidden />
-            <Label $active={active}>{it.label}</Label>
-          </Item>
-        );
-      })}
+      {items.map((it) => (
+        <Item key={it.to} to={it.to} end={it.to === '/'} aria-label={it.label}>
+          <Icon $src={it.icon} aria-hidden />
+          <Label>{it.label}</Label>
+        </Item>
+      ))}
     </Bar>
   );
 };

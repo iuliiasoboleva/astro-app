@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 import timeIcon from './assets/icons/history.svg';
 import homeIcon from './assets/icons/home.svg';
 import userIcon from './assets/icons/profile.svg';
 import BottomTabs from './components/BottomTabs';
+import ScrollToTop from './hooks/ScrollToTop';
 import Home from './pages/Home';
+import { AppWrap, Content, TabSpacer } from './styles';
 
 const TABS = [
-  { value: 'home', label: 'Главная', icon: homeIcon },
-  { value: 'history', label: 'История', icon: timeIcon },
-  { value: 'profile', label: 'Профиль', icon: userIcon },
+  { to: '/', label: 'Главная', icon: homeIcon },
+  { to: '/history', label: 'История', icon: timeIcon },
+  { to: '/profile', label: 'Профиль', icon: userIcon },
 ];
 
-function App() {
-  const [tab, setTab] = useState('home');
-
+function Layout() {
   return (
-    <div style={{ margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ flex: 1 }}>
-        {tab === 'home' && <Home />}
-        {tab === 'history' && <div style={{ padding: 20 }}>История (заглушка)</div>}
-        {tab === 'profile' && <div style={{ padding: 20 }}>Профиль (заглушка)</div>}
-      </div>
+    <AppWrap>
+      <ScrollToTop />
+      <Content>
+        <Outlet />
+      </Content>
 
-      <BottomTabs items={TABS} value={tab} onChange={setTab} />
-    </div>
+      <TabSpacer />
+      <BottomTabs items={TABS} />
+    </AppWrap>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="history" element={<div>История (заглушка)</div>} />
+        <Route path="profile" element={<div>Профиль (заглушка)</div>} />
+      </Route>
+    </Routes>
+  );
+}
