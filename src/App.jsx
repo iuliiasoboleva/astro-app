@@ -35,6 +35,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="tarot" element={<Tarot />} />
+        <Route path="tarot/:id" element={<div>Экран расклада (заглушка)</div>} />
         <Route path="history" element={<div>История (заглушка)</div>} />
         <Route path="profile" element={<div>Профиль (заглушка)</div>} />
       </Route>

@@ -50,10 +50,9 @@ export const Sheet = styled.section`
   max-width: 420px;
 
   background: #fff;
-  border-radius: 22px 22px 0 0;
-  box-shadow: 0 -10px 28px rgba(15, 30, 40, 0.12);
+  border-radius: 35px 35px 0 0;
 
-  padding: 12px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  padding: 15px 35px calc(35px + env(safe-area-inset-bottom, 0px));
   height: ${(p) => p.$height};
   max-height: ${(p) => p.$maxHeight};
   overflow: auto;
@@ -77,9 +76,9 @@ export const Sheet = styled.section`
 `;
 
 export const DragHandle = styled.div`
-  width: 42px;
-  height: 5px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.12);
-  margin: 6px auto 12px;
+  width: 64px;
+  height: 4px;
+  margin: 0 auto 75px;
+  border-radius: 45px;
+  background: #e2eaf1;
 `;

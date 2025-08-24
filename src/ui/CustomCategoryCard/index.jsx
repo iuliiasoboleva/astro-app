@@ -11,14 +11,7 @@ export const CustomCategoryCard = ({ title, bg, status = 'default', onClick, cla
   const pillText = locked ? 'Заблокировано' : 'Перейти';
 
   return (
-    <Card
-      $bg={bg}
-      $status={status}
-      onClick={!locked ? onClick : undefined}
-      disabled={locked}
-      className={className}
-      aria-disabled={locked}
-    >
+    <Card $bg={bg} $status={status} onClick={onClick} className={className}>
       <Title $status={status}>{title}</Title>
       <BottomBlock>
         <Pill $status={status}>{pillText}</Pill>

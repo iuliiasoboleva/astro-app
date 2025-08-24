@@ -69,3 +69,9 @@ export const CardsGrid = styled.div`
     grid-template-columns: 1fr;
   }
 `;
+
+export const NotCardsInfo = styled.div`
+  display: flex;
+  padding: 23px;
+  margin-top: 50px;
+`;

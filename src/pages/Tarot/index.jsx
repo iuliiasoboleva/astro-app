@@ -1,20 +1,54 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
+import cardCircle from '../../assets/images/card-circle.png';
+import moneyCircle from '../../assets/images/money-circle.png';
+import sadCircle from '../../assets/images/sad-circle.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import cards from '../../mocks/cards';
 import { FILTER_ITEMS } from '../../mocks/tabsFilter';
 import CustomCategoryCard from '../../ui/CustomCategoryCard';
 import CustomTabs from '../../ui/CustomTabs';
-import { CardsGrid, MainTitle, Page, SoftBlock, TitleBlock, TopTitle } from './styles';
+import {
+  CardsGrid,
+  MainTitle,
+  NotCardsInfo,
+  Page,
+  SoftBlock,
+  TitleBlock,
+  TopTitle,
+} from './styles';
 
 const Tarot = () => {
   const [filter, setFilter] = useState('free');
   const [open, setOpen] = useState(false);
-
   const navigate = useNavigate();
+
+  const filteredCards = useMemo(() => {
+    switch (filter) {
+      case 'free': {
+        const freeCards = cards.filter((c) => c.free === true);
+        const justLocked = cards.filter((c) => !c.free && !c.subscription && !c.purchased);
+        return [...freeCards, ...justLocked];
+      }
+      case 'subscription':
+        return cards.filter((c) => c.subscription === true);
+      case 'purchased':
+        return cards.filter((c) => c.purchased === true);
+      default:
+        return cards;
+    }
+  }, [filter, cards]);
+
+  const handleCardClick = (card) => {
+    if (card.status === 'locked') {
+      setOpen(true);
+    } else {
+      navigate(`/tarot/${card.id}`);
+    }
+  };
 
   return (
     <>
@@ -31,25 +65,52 @@ const Tarot = () => {
 
         <SoftBlock>
           <CustomTabs items={FILTER_ITEMS} value={filter} onChange={setFilter} />
-          <MainTitle>
-            Какой расклад Таро
-            <br />
-            хотите попробовать?
-          </MainTitle>
-
-          <CardsGrid>
-            {cards.map((card) => (
-              <CustomCategoryCard
-                key={card.id}
-                title={card.title}
-                bg={card.bg}
-                status={card.status}
-                onClick={() => setOpen(true)}
+          {filteredCards.length === 0 ? (
+            <NotCardsInfo>
+              <InfoCard
+                icon={filter === 'subscription' ? sadCircle : cardCircle}
+                title={
+                  filter === 'subscription'
+                    ? 'У вас ещё нет подписки'
+                    : 'У вас пока нет купленных раскладов'
+                }
+                subtitle={
+                  filter === 'subscription'
+                    ? 'Оформите подписку и получите полный доступ ко всем закрытым раскладам — без доплат и ограничений.'
+                    : 'Вы можете приобрести любой расклад отдельно — и пользоваться им без ограничений в любое время.'
+                }
+                buttonLabel={
+                  filter === 'subscription' ? 'Оформить подписку' : 'Открыть магазин раскладов'
+                }
+                onButtonClick={() => {
+                  () => setOpen(false);
+                }}
               />
-            ))}
-          </CardsGrid>
+            </NotCardsInfo>
+          ) : (
+            <>
+              <MainTitle>
+                Какой расклад Таро
+                <br />
+                хотите попробовать?
+              </MainTitle>
+
+              <CardsGrid>
+                {filteredCards.map((card) => (
+                  <CustomCategoryCard
+                    key={card.id}
+                    title={card.title}
+                    bg={card.bg}
+                    status={card.status}
+                    onClick={() => handleCardClick(card)}
+                  />
+                ))}
+              </CardsGrid>
+            </>
+          )}
         </SoftBlock>
       </Page>
+
       <BottomSheet
         open={open}
         onClose={() => setOpen(false)}
@@ -58,12 +119,12 @@ const Tarot = () => {
         ariaLabel="Оформление подписки"
       >
         <InfoCard
-          title="Подписка"
-          subtitle="Подпишитесь и откройте 10+ раскладов без ограничений"
+          icon={moneyCircle}
+          title="Подпишитесь и откройте 10+ раскладов без ограничений"
+          subtitle=""
           buttonLabel="Оформить подписку"
-          variant="outline"
           onButtonClick={() => {
-            // твой код
+            () => setOpen(false);
           }}
         />
       </BottomSheet>
