@@ -8,6 +8,9 @@ import BottomTabs from './components/BottomTabs';
 import ScrollToTop from './hooks/ScrollToTop';
 import Home from './pages/Home';
 import Tarot from './pages/Tarot';
+import TarotRequest from './pages/TarotRequest';
+import TarotResult from './pages/TarotResult';
+import TarotSpread from './pages/TarotSpread';
 import { AppWrap, Content } from './styles';
 
 const TABS = [
@@ -35,7 +38,9 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="tarot" element={<Tarot />} />
-        <Route path="tarot/:id" element={<div>Экран расклада (заглушка)</div>} />
+        <Route path="tarot/:id" element={<TarotRequest />} />
+        <Route path="tarot/:id/spread" element={<TarotSpread />} />
+        <Route path="tarot/:id/result" element={<TarotResult />} />
         <Route path="history" element={<div>История (заглушка)</div>} />
         <Route path="profile" element={<div>Профиль (заглушка)</div>} />
       </Route>

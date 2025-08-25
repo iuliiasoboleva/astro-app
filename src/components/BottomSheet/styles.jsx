@@ -44,7 +44,7 @@ export const Sheet = styled.section`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: env(safe-area-inset-bottom, 0px);
+  bottom: 0;
   margin: 0 auto;
   width: 100%;
   max-width: 420px;

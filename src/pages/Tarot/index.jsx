@@ -46,7 +46,7 @@ const Tarot = () => {
     if (card.status === 'locked') {
       setOpen(true);
     } else {
-      navigate(`/tarot/${card.id}`);
+      navigate(`/tarot/${card.id}?count=${card.count || 5}`);
     }
   };
 
