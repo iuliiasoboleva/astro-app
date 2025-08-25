@@ -118,15 +118,17 @@ const Tarot = () => {
         maxHeight="80vh"
         ariaLabel="Оформление подписки"
       >
-        <InfoCard
-          icon={moneyCircle}
-          title="Подпишитесь и откройте 10+ раскладов без ограничений"
-          subtitle=""
-          buttonLabel="Оформить подписку"
-          onButtonClick={() => {
-            () => setOpen(false);
-          }}
-        />
+        <div style={{ margin: '75px 20px 0' }}>
+          <InfoCard
+            icon={moneyCircle}
+            title="Подпишитесь и откройте 10+ раскладов без ограничений"
+            subtitle=""
+            buttonLabel="Оформить подписку"
+            onButtonClick={() => {
+              () => setOpen(false);
+            }}
+          />
+        </div>
       </BottomSheet>
     </>
   );

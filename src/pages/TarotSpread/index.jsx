@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
@@ -29,7 +29,7 @@ import {
 } from './styles';
 
 const TOTAL_CARDS = 70;
-const CARD_W = 116;
+const CARD_W = 79;
 const GAP = 10;
 const BUFFER = 6;
 
@@ -59,6 +59,7 @@ const TarotSpread = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [search] = useSearchParams();
+  const count = Number(search.get('count')) || 5;
 
   const REQUIRED = (() => {
     const n = Number(search.get('count')) || 5;
@@ -85,16 +86,13 @@ const TarotSpread = () => {
 
   const trackRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = trackRef.current;
     if (!el || looped.length === 0) return;
     const padLeft = parseInt(getComputedStyle(el).paddingLeft || '0', 10);
     const step = CARD_W + GAP;
     const start = padLeft + step * Math.min(BUFFER, remaining.length);
-    const t = setTimeout(() => {
-      el.scrollLeft = start;
-    }, 0);
-    return () => clearTimeout(t);
+    el.scrollLeft = start;
   }, [looped.length, remaining.length]);
 
   useEffect(() => {
@@ -113,14 +111,15 @@ const TarotSpread = () => {
       ticking = true;
       requestAnimationFrame(() => {
         const x = el.scrollLeft;
-        if (x < realStart - step) {
+        if (x < realStart - step * 0.6) {
           el.scrollLeft = x + step * remaining.length;
-        } else if (x > realEnd + step) {
+        } else if (x > realEnd + step * 0.6) {
           el.scrollLeft = x - step * remaining.length;
         }
         ticking = false;
       });
     };
+
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
   }, [looped.length, remaining.length]);
@@ -148,7 +147,7 @@ const TarotSpread = () => {
 
   const allChosen = placeholdersCount === 0;
 
-  // авто-редирект через 5 секунд после показа анализа ===
+  // авто-редирект через 5 секунд после показа анализа
   const redirectRef = useRef(null);
   useEffect(() => {
     if (!allChosen) {
@@ -156,13 +155,12 @@ const TarotSpread = () => {
       return;
     }
     redirectRef.current = setTimeout(() => {
-      navigate(`/tarot/${id}/result`, { replace: true });
+      navigate(`/tarot/${id}/result?count=${count}`, { replace: true });
     }, 5000);
     return () => {
       if (redirectRef.current) clearTimeout(redirectRef.current);
     };
-  }, [allChosen, id, navigate]);
-  // =================================================================
+  }, [allChosen, id, navigate, count]);
 
   return (
     <Page>
@@ -218,9 +216,13 @@ const TarotSpread = () => {
             <SliderTrack ref={trackRef}>
               {looped.map((id, idx) => (
                 <BigCard
-                  key={`${id}-${idx}`}
+                  as="div"
+                  role="button"
+                  key={idx}
+                  data-id={id}
                   $img={largeCard}
                   $disabled={!canPick}
+                  onMouseDown={(e) => e.preventDefault()}
                   onClick={canPick ? () => pickCard(id) : undefined}
                   aria-disabled={!canPick}
                   tabIndex={canPick ? 0 : -1}

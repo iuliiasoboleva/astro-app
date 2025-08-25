@@ -52,7 +52,7 @@ export const Sheet = styled.section`
   background: #fff;
   border-radius: 35px 35px 0 0;
 
-  padding: 15px 35px calc(35px + env(safe-area-inset-bottom, 0px));
+  padding: 15px 15px calc(35px + env(safe-area-inset-bottom, 0px));
   height: ${(p) => p.$height};
   max-height: ${(p) => p.$maxHeight};
   overflow: auto;
@@ -78,7 +78,7 @@ export const Sheet = styled.section`
 export const DragHandle = styled.div`
   width: 64px;
   height: 4px;
-  margin: 0 auto 75px;
+  margin: 0 auto 35px;
   border-radius: 45px;
   background: #e2eaf1;
 `;

@@ -15,6 +15,7 @@ export const Wrapper = styled.button`
   letter-spacing: -0.36px;
   font-family: var(--font-sfpro);
   transition: background 0.2s ease;
+  margin: 0 10px;
 
   img,
   svg {

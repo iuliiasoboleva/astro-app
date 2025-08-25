@@ -37,6 +37,7 @@ export const SoftBlock = styled.section`
   background: linear-gradient(180deg, #f9fcff 0%, #fff 100%);
   margin-top: 8px;
   overflow: hidden;
+  padding-bottom: 80px;
 `;
 
 export const TopBlock = styled.div`
@@ -63,6 +64,7 @@ export const TitleWrapper = styled.div`
   gap: 8px;
   width: 100%;
   align-items: center;
+  padding: 0 10px;
 `;
 
 export const Text = styled.p`
@@ -153,8 +155,8 @@ export const SliderTrack = styled.div`
 
   padding: 0 24px 26px;
 
-  scroll-snap-type: x proximity;
-  scroll-padding: 24px;
+  scroll-snap-type: none;
+  scroll-padding: 0;
 
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -184,24 +186,24 @@ export const SliderTrack = styled.div`
   }
 `;
 
-export const BigCard = styled.button`
+export const BigCard = styled.div`
   flex: 0 0 auto;
   width: 79px;
   height: 140px;
   background: ${({ $img }) => `url(${$img}) center/cover no-repeat`};
   cursor: pointer;
 
-  scroll-snap-align: center;
   transition:
     transform 0.14s ease,
     border-color 0.18s ease;
+  will-change: transform;
 
   &:active {
     transform: translateY(1px) scale(0.99);
   }
-  &:focus-visible {
-    outline: 2px solid #4f93c9;
-    outline-offset: 2px;
+
+  &:focus {
+    outline: none;
   }
 
   ${({ $disabled }) =>
@@ -212,6 +214,7 @@ export const BigCard = styled.button`
       cursor: default;
     `}
 `;
+
 const bounce = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }

@@ -78,6 +78,7 @@ export const TitleWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
+  padding: 0 10px;
 `;
 
 export const Textarea = styled.textarea`
