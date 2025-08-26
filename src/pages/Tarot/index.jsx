@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
@@ -7,8 +8,9 @@ import moneyCircle from '../../assets/images/money-circle.png';
 import sadCircle from '../../assets/images/sad-circle.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
-import cards from '../../mocks/cardsTarot';
 import { FILTER_ITEMS } from '../../mocks/tabsFilter';
+import cards from '../../mocks/tarotCategories';
+import { resetSession, startSession } from '../../store/tarotSessionSlice';
 import CustomCategoryCard from '../../ui/CustomCategoryCard';
 import CustomTabs from '../../ui/CustomTabs';
 import {
@@ -25,6 +27,7 @@ const Tarot = () => {
   const [filter, setFilter] = useState('free');
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const filteredCards = useMemo(() => {
     switch (filter) {
@@ -46,20 +49,22 @@ const Tarot = () => {
     if (card.status === 'locked') {
       setOpen(true);
     } else {
-      navigate(`/tarot/${card.id}?count=${card.count || 5}`);
+      dispatch(startSession({ categoryId: card.id, requiredCount: card.count }));
+
+      navigate(`/tarot/${card.id}`);
     }
+  };
+
+  const handleBack = () => {
+    dispatch(resetSession());
+    navigate(-1);
   };
 
   return (
     <>
       <Page>
         <TitleBlock>
-          <img
-            src={arrowBack}
-            alt="Назад"
-            onClick={() => navigate(-1)}
-            style={{ cursor: 'pointer' }}
-          />
+          <img src={arrowBack} alt="Назад" onClick={handleBack} style={{ cursor: 'pointer' }} />
           <TopTitle>Расклад Таро</TopTitle>
         </TitleBlock>
 

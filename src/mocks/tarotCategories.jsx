@@ -23,102 +23,118 @@ const raw = [
   {
     id: 1,
     title: 'Расклад\nна отношения',
+    shortTitle: '«Отношения»',
     icon: relationshipIcon,
     bg: relationshipBg,
     free: true,
     subscription: false,
     purchased: false,
-    count: 5,
+    count: 6,
   },
   {
     id: 2,
     title: 'Расклад\nна выбор парня',
+    shortTitle: '«Выбор парня»',
     icon: boyfriendIcon,
     bg: boyfriendBg,
     free: true,
     subscription: false,
     purchased: false,
-    count: 3,
+    count: 7,
   },
   {
     id: 3,
     title: 'Расклад\nна «Да/Нет»',
+    shortTitle: '«Да/Нет»',
     icon: yesnoIcon,
     bg: yesnoBg,
     free: false,
     subscription: false,
     purchased: false,
+    count: 3,
   },
   {
     id: 4,
     title: 'Расклад на выбор\n«Два пути»',
+    shortTitle: '«Два пути»',
     icon: twoPathsIcon,
     bg: twoPathsBg,
     free: false,
     subscription: false,
     purchased: false,
+    count: 7,
   },
   {
     id: 5,
     title: 'Расклад\nна будущее',
+    shortTitle: '«Будущее»',
     icon: futureIcon,
     bg: futureBg,
     free: false,
     subscription: false,
     purchased: true,
+    count: 5,
   },
   {
     id: 6,
     title: 'Расклад на работу\nи бизнес',
+    shortTitle: '«Работа и бизнес»',
     icon: businessIcon,
     bg: businessBg,
     free: false,
     subscription: true,
     purchased: false,
+    count: 5,
   },
   {
     id: 7,
     title: 'Расклад\n«Совет от карт»',
+    shortTitle: '«Совет от карт»',
     icon: adviceIcon,
     bg: adviceBg,
     free: false,
     subscription: true,
     purchased: false,
+    count: 3,
   },
   {
     id: 8,
     title: 'Расклад\n«Колесо года»',
+    shortTitle: '«Колесо года»',
     icon: wheelIcon,
     bg: wheelBg,
     free: false,
     subscription: true,
     purchased: false,
+    count: 13,
   },
   {
     id: 9,
     title: 'Расклад\nна духовный путь',
+    shortTitle: '«Духовный путь»',
     icon: wayIcon,
     bg: wayBg,
     free: false,
     subscription: true,
     purchased: false,
+    count: 5,
   },
   {
     id: 10,
     title: 'Расклад\nна финансы',
+    shortTitle: '«Финансы»',
     icon: financeIcon,
     bg: financeBg,
     free: false,
     subscription: true,
     purchased: false,
+    count: 5,
   },
 ];
 
-const computeStatus = (card) => {
-  if (card.purchased) return 'purchased';
-  if (card.free || card.subscription) return 'default';
-  return 'locked';
-};
+const computeStatus = (card) =>
+  card.purchased ? 'purchased' : card.free || card.subscription ? 'default' : 'locked';
 
-const cards = raw.map((c) => ({ ...c, status: computeStatus(c) }));
-export default cards;
+export const tarotCategories = raw.map((c) => ({ ...c, status: computeStatus(c) }));
+export const tarotCategoryById = Object.fromEntries(tarotCategories.map((c) => [String(c.id), c]));
+export default tarotCategories;

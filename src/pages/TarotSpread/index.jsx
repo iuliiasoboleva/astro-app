@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
@@ -8,6 +9,15 @@ import largeCard from '../../assets/images/large-card.png';
 import smallCard from '../../assets/images/small-card.png';
 import TagButton from '../../components/TagButton';
 import TarotAnalysis from '../../components/TarotAnalysis';
+import { tarotCategoryById } from '../../mocks/tarotCategories';
+import {
+  addPick,
+  resetSession,
+  selectTarot,
+  setCategoryId,
+  setRequiredCount,
+  submitTarotSession,
+} from '../../store/tarotSessionSlice';
 import {
   ArrowUp,
   BigCard,
@@ -28,10 +38,11 @@ import {
   TopTitle,
 } from './styles';
 
-const TOTAL_CARDS = 70;
+const TOTAL_CARDS = 78;
 const CARD_W = 79;
 const GAP = 10;
 const BUFFER = 6;
+const PAGE_SIZE = 5;
 
 const ORDINALS = [
   'первую',
@@ -44,6 +55,9 @@ const ORDINALS = [
   'восьмую',
   'девятую',
   'десятую',
+  'одиннадцатую',
+  'двенадцатую',
+  'тринадцатую',
 ];
 
 function shuffleDeck(n) {
@@ -58,22 +72,26 @@ function shuffleDeck(n) {
 const TarotSpread = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [search] = useSearchParams();
-  const count = Number(search.get('count')) || 5;
+  const dispatch = useDispatch();
+  const { requiredCount, picked } = useSelector(selectTarot);
 
-  const REQUIRED = (() => {
-    const n = Number(search.get('count')) || 5;
-    return Math.min(10, Math.max(1, Math.floor(n)));
-  })();
+  const REQUIRED = Math.min(13, Math.max(1, Number(requiredCount) || 5));
 
   const [remaining, setRemaining] = useState(() => shuffleDeck(TOTAL_CARDS));
-  const [picked, setPicked] = useState([]);
-  const [justPickedId, setJustPickedId] = useState(null);
+
+  useEffect(() => {
+    dispatch(setCategoryId(id));
+
+    if (!requiredCount) {
+      const category = tarotCategoryById?.[String(id)];
+      if (category?.count) {
+        dispatch(setRequiredCount(category.count));
+      }
+    }
+  }, [id, requiredCount, dispatch]);
 
   useEffect(() => {
     setRemaining(shuffleDeck(TOTAL_CARDS));
-    setPicked([]);
-    setJustPickedId(null);
   }, [id, REQUIRED]);
 
   const looped = useMemo(() => {
@@ -125,7 +143,6 @@ const TarotSpread = () => {
   }, [looped.length, remaining.length]);
 
   const totalChosen = picked.length;
-  const visibleChosen = picked.slice(Math.max(0, totalChosen - REQUIRED), totalChosen);
   const placeholdersCount = Math.max(0, REQUIRED - totalChosen);
   const canPick = totalChosen < REQUIRED;
 
@@ -139,39 +156,48 @@ const TarotSpread = () => {
     if (!canPick) return;
     if (!remaining.includes(cardId)) return;
 
-    setPicked((prev) => [...prev, cardId]);
-    setJustPickedId(cardId);
+    dispatch(addPick(cardId));
     setRemaining((prev) => prev.filter((id) => id !== cardId));
-    setTimeout(() => setJustPickedId(null), 450);
   };
 
   const allChosen = placeholdersCount === 0;
 
-  // авто-редирект через 5 секунд после показа анализа
-  const redirectRef = useRef(null);
   useEffect(() => {
-    if (!allChosen) {
-      if (redirectRef.current) clearTimeout(redirectRef.current);
-      return;
-    }
-    redirectRef.current = setTimeout(() => {
-      navigate(`/tarot/${id}/result?count=${count}`, { replace: true });
-    }, 5000);
+    if (!allChosen) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        await dispatch(submitTarotSession()).unwrap();
+        if (!cancelled) navigate(`/tarot/${id}/result`, { replace: true });
+      } catch (e) {
+        // опционально: показать тост/ошибку
+      }
+    })();
+
     return () => {
-      if (redirectRef.current) clearTimeout(redirectRef.current);
+      cancelled = true;
     };
-  }, [allChosen, id, navigate, count]);
+  }, [allChosen, dispatch, id, navigate]);
+
+  const handleBack = () => {
+    dispatch(resetSession());
+    navigate(-1);
+  };
+
+  const category = tarotCategoryById?.[String(id)] || null;
+  const categoryShortTitle = category?.shortTitle;
 
   return (
     <Page>
       <TitleBlock>
-        <img src={arrowBack} alt="Назад" onClick={() => navigate(-1)} />
+        <img src={arrowBack} alt="Назад" onClick={handleBack} />
         <TopTitle>Расклад Таро</TopTitle>
       </TitleBlock>
 
       <SoftBlock>
         <TopBlock>
-          <TagButton icon={cardsIcon} label="«Да/Нет»" onClick={() => {}} />
+          <TagButton icon={cardsIcon} label={categoryShortTitle} />
 
           {!allChosen ? (
             <TitleWrapper style={{ alignItems: 'flex-start' }}>
@@ -190,23 +216,35 @@ const TarotSpread = () => {
 
           {!allChosen && (
             <ChosenWrap>
-              <ChosenList $count={REQUIRED}>
-                {visibleChosen.map((pid) => (
-                  <ChosenItem
-                    key={pid}
-                    $img={smallCard}
-                    className={pid === justPickedId ? 'animate-in' : undefined}
-                  />
-                ))}
-                {Array.from({ length: placeholdersCount }).map((_, i) => {
-                  const label = (totalChosen + i + 1).toString().padStart(2, '0');
-                  return (
-                    <Placeholder key={`ph-${label}`}>
-                      <span>{label}</span>
-                    </Placeholder>
-                  );
-                })}
-              </ChosenList>
+              {(() => {
+                const totalChosen = picked.length;
+                const pageIndex = Math.floor(totalChosen / PAGE_SIZE); // 0,1,2...
+                const start = pageIndex * PAGE_SIZE; // индекс первого слота на странице
+                const end = Math.min(start + PAGE_SIZE, REQUIRED); // индекс за последним видимым слотом
+                const slots = Array.from({ length: end - start }, (_, i) => start + i); // абсолютные индексы слотов
+
+                return (
+                  <ChosenList $count={REQUIRED}>
+                    {slots.map((slotIndex) => {
+                      const isFilled = slotIndex < totalChosen;
+                      const numberLabel = String(slotIndex + 1).padStart(2, '0'); // 01..13
+
+                      return isFilled ? (
+                        <ChosenItem
+                          key={`c-${slotIndex}`}
+                          $img={smallCard}
+                          // анимация только для последнего добавленного слота
+                          className={slotIndex === totalChosen - 1 ? 'animate-in' : undefined}
+                        />
+                      ) : (
+                        <Placeholder key={`ph-${slotIndex}`}>
+                          <span>{numberLabel}</span>
+                        </Placeholder>
+                      );
+                    })}
+                  </ChosenList>
+                );
+              })()}
             </ChosenWrap>
           )}
         </TopBlock>

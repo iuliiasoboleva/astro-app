@@ -25,6 +25,7 @@ const raw = [
   {
     id: 1,
     title: 'Финансы\nи цели',
+    shortTitle: '«Финансы и цели»',
     icon: financeIcon,
     bg: financeBg,
     free: true,
@@ -35,6 +36,7 @@ const raw = [
   {
     id: 2,
     title: 'Здоровье\nи спорт',
+    shortTitle: '«Здоровье и спорт»',
     icon: healthIcon,
     bg: healthBg,
     free: true,
@@ -45,6 +47,7 @@ const raw = [
   {
     id: 3,
     title: 'Карта вашего\nребенка',
+    shortTitle: '«Карта ребенка»',
     icon: childIcon,
     bg: childBg,
     free: false,
@@ -54,6 +57,7 @@ const raw = [
   {
     id: 4,
     title: 'Анализ\nмужчины',
+    shortTitle: '«Анализ мужчины»',
     icon: boyfriendIcon,
     bg: boyfriendBg,
     free: false,
@@ -63,6 +67,7 @@ const raw = [
   {
     id: 5,
     title: 'Рассчет натальной\nкарты целиком',
+    shortTitle: '«Натальная карта»',
     icon: fullIcon,
     bg: fullBg,
     free: false,
@@ -72,6 +77,7 @@ const raw = [
   {
     id: 6,
     title: 'Совместимость',
+    shortTitle: '«Совместимость»',
     icon: relationshipIcon,
     bg: relationshipBg,
     free: false,
@@ -81,6 +87,7 @@ const raw = [
   {
     id: 7,
     title: 'Женская\nэнергия',
+    shortTitle: '«Женская энергия»',
     icon: energyIcon,
     bg: energyBg,
     free: false,
@@ -90,6 +97,7 @@ const raw = [
   {
     id: 8,
     title: 'Женский разбор\nпро отношения',
+    shortTitle: '«Женский разбор»',
     icon: womanIcon,
     bg: womanBg,
     free: false,
@@ -99,6 +107,7 @@ const raw = [
   {
     id: 9,
     title: 'Кармические\nзадачи',
+    shortTitle: '«Кармические задачи»',
     icon: karmaIcon,
     bg: karmaBg,
     free: false,
@@ -108,6 +117,7 @@ const raw = [
   {
     id: 10,
     title: 'Внешность',
+    shortTitle: '«Внешность»',
     icon: lookIcon,
     bg: lookBg,
     free: false,
@@ -117,6 +127,7 @@ const raw = [
   {
     id: 11,
     title: 'Ваш источник\nэнергии и ресурса',
+    shortTitle: '«Энергия и ресурс»',
     icon: sourceIcon,
     bg: sourceBg,
     free: false,

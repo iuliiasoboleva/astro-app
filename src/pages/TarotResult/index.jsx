@@ -1,14 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
 import cardsIcon from '../../assets/icons/cards.svg';
-import resumeIcon from '../../assets/images/resume/tarot/relationship.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import Subscription from '../../components/Subscription';
 import TagButton from '../../components/TagButton';
 import TarotResume from '../../components/TarotResume';
+import { plans } from '../../mocks/tariffs';
+import { tarotCategoryById } from '../../mocks/tarotCategories';
+import { fullResume, tarotResume } from '../../mocks/tarotResume';
+import { tarotById } from '../../mocks/tarotValues';
+import { resetSession, selectTarot } from '../../store/tarotSessionSlice';
 import CustomButton from '../../ui/CustomButton';
 import {
   ButtonBlock,
@@ -26,84 +31,16 @@ import {
   TopTitle,
 } from './styles';
 
-const cards = import.meta.glob('../../assets/images/cards/*.jpg', { eager: true });
-const cardImages = Object.fromEntries(
-  Object.entries(cards).map(([path, module]) => {
-    const fileName = path.split('/').pop();
-    const id = fileName?.replace('.jpg', '');
-    return [id, module.default];
-  }),
-);
-
 const TarotResult = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [search] = useSearchParams();
-  const count = Number(search.get('count')) || 5;
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-
-  const chosenCards = [1, 2, 3, 4, 5];
-
-  const sections = [
-    {
-      image: cardImages['1'],
-      label: '10 Жезлов',
-      title: 'Текущая ситуация в работе / бизнесе',
-      subtitle:
-        'Сейчас ты находишься под грузом ответственности и обязанностей. Кажется, что на твоих плечах лежит слишком много задач. Это может вызывать усталость и эмоциональное напряжение.',
-    },
-    {
-      image: cardImages['2'],
-      label: 'Верховная жрица',
-      title: 'Что мешает или тормозит рост',
-      subtitle:
-        'Тебя могут сдерживать внутренние сомнения или недостаток интуитивного понимания ситуации. Возможно, ты слишком полагаешься на логику и забываешь прислушиваться к своему внутреннему голосу.',
-    },
-    {
-      image: cardImages['3'],
-      label: '3 Пентаклей',
-      title: 'Что поможет продвинуться вперёд',
-      subtitle:
-        'Коллаборация и совместная работа с другими людьми станут твоим ключом к успеху. Не бойся привлекать коллег и создавать команду, ведь объединённые усилия принесут лучшие результаты.',
-    },
-    {
-      image: cardImages['4'],
-      label: '5 Жезлов',
-      title: 'Финансовая перспектива',
-      subtitle:
-        'На пути к увеличению дохода могут появиться препятствия и конкуренция, но это скорее стимулирует тебя бороться за своё место под солнцем. Этот вызов заставит взглянуть на ключевые вопросы по-новому и найти свежие подходы.',
-    },
-    {
-      image: cardImages['5'],
-      label: '10 Кубков',
-      title: 'Совет / ключ к успеху',
-      subtitle:
-        'Фокусируйся на гармонии и эмоциональном удовлетворении от того, что делаешь. Семья, друзья и личное счастье должны оставаться приоритетом, так как они дают энергию для профессиональных свершений. Обрати внимание на баланс между работой и жизнью.',
-    },
-  ];
-
-  const plans = useMemo(
-    () => [
-      {
-        id: 'vip-month',
-        price: '990',
-        period: 'месяц',
-        badge: 'VIP',
-        features: ['Неограниченные Таро-расклады', '1 Астро-расклад в месяц'],
-      },
-      {
-        id: 'platinum-year',
-        price: '9990',
-        period: 'год',
-        badge: 'PLATINUM',
-        features: ['Неограниченные Таро-расклады', 'Неограниченные Астро-расклады'],
-      },
-    ],
-    [],
-  );
-
   const [selectedPlanId, setSelectedPlanId] = useState(null);
+
+  const { picked } = useSelector(selectTarot);
+
   const selectedPlan = useMemo(
     () => plans.find((p) => p.id === selectedPlanId) || null,
     [plans, selectedPlanId],
@@ -113,27 +50,33 @@ const TarotResult = () => {
     // navigate(`/tarot/${id}?count=${count}`)
     setOpen(true);
   };
+
   const handleSelectPlan = (planId) => setSelectedPlanId(planId);
+
   const handlePay = () => {
     if (!selectedPlan) return;
     navigate(`/`, { replace: true });
   };
 
+  const handleBack = () => {
+    dispatch(resetSession());
+    navigate(-1);
+  };
+
+  const category = tarotCategoryById?.[String(id)] || null;
+  const categoryIcon = category?.icon;
+  const categoryShortTitle = category?.shortTitle;
+
   return (
     <>
       <Page>
         <TitleBlock>
-          <img
-            src={arrowBack}
-            alt="Назад"
-            onClick={() => navigate(-1)}
-            style={{ cursor: 'pointer' }}
-          />
+          <img src={arrowBack} alt="Назад" onClick={handleBack} style={{ cursor: 'pointer' }} />
           <TopTitle>Расклад Таро</TopTitle>
         </TitleBlock>
 
         <SoftBlock>
-          <TagButton icon={cardsIcon} label="«Да/Нет»" />
+          <TagButton icon={cardsIcon} label={categoryShortTitle} />
 
           <TitleWrapper>
             <MainTitle>Ваш расклад Таро</MainTitle>
@@ -141,27 +84,31 @@ const TarotResult = () => {
           </TitleWrapper>
 
           <CardsRow>
-            {chosenCards.map((num) => (
-              <CardImg key={num} src={cardImages[num]} alt={`Карта ${num}`} />
-            ))}
+            {picked.map((pid) => {
+              const card = tarotById[pid];
+              if (!card?.image) return null;
+              return <CardImg key={pid} src={card.image} alt={card.title || `Карта ${pid}`} />;
+            })}
           </CardsRow>
 
-          {sections.map((s, i) => (
-            <TarotResume
-              key={i}
-              image={s.image}
-              label={s.label}
-              title={s.title}
-              subtitle={s.subtitle}
-            />
-          ))}
+          {picked.map((pid, i) => {
+            const role = tarotResume[i];
+            const card = tarotById[pid];
+            if (!role || !card?.image) return null;
+
+            return (
+              <TarotResume
+                key={`${pid}-${i}`}
+                image={card.image}
+                label={card.title}
+                title={role.title}
+                subtitle={role.subtitle}
+              />
+            );
+          })}
 
           <ResumeWrapper>
-            <InfoCard
-              icon={resumeIcon}
-              title="Общий вывод"
-              subtitle="Ваши отношения имеют потенциал для продуктивного и энергичного развития. Несмотря на некоторые конфликты или недопонимания, ваша связь очень сильная и взаимная. Слушай своё сердце и сохраняй позитив, ведь впереди тебя ждёт много ярких моментов!"
-            />
+            <InfoCard icon={categoryIcon} title="Общий вывод" subtitle={fullResume} />
           </ResumeWrapper>
 
           <ButtonBlock>
