@@ -44,7 +44,7 @@ export const SoftBlock = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
 `;
 
 export const MainTitle = styled.h1`
@@ -95,7 +95,7 @@ export const CardsRow = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 8px 0 40px;
+  margin: 8px 0 30px;
   flex-wrap: wrap;
   align-self: center;
 `;

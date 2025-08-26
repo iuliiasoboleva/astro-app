@@ -8,6 +8,7 @@ import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import Subscription from '../../components/Subscription';
 import TagButton from '../../components/TagButton';
+import TarotResume from '../../components/TarotResume';
 import CustomButton from '../../ui/CustomButton';
 import {
   ButtonBlock,
@@ -44,6 +45,44 @@ const TarotResult = () => {
 
   const chosenCards = [1, 2, 3, 4, 5];
 
+  const sections = [
+    {
+      image: cardImages['1'],
+      label: '10 Жезлов',
+      title: 'Текущая ситуация в работе / бизнесе',
+      subtitle:
+        'Сейчас ты находишься под грузом ответственности и обязанностей. Кажется, что на твоих плечах лежит слишком много задач. Это может вызывать усталость и эмоциональное напряжение.',
+    },
+    {
+      image: cardImages['2'],
+      label: 'Верховная жрица',
+      title: 'Что мешает или тормозит рост',
+      subtitle:
+        'Тебя могут сдерживать внутренние сомнения или недостаток интуитивного понимания ситуации. Возможно, ты слишком полагаешься на логику и забываешь прислушиваться к своему внутреннему голосу.',
+    },
+    {
+      image: cardImages['3'],
+      label: '3 Пентаклей',
+      title: 'Что поможет продвинуться вперёд',
+      subtitle:
+        'Коллаборация и совместная работа с другими людьми станут твоим ключом к успеху. Не бойся привлекать коллег и создавать команду, ведь объединённые усилия принесут лучшие результаты.',
+    },
+    {
+      image: cardImages['4'],
+      label: '5 Жезлов',
+      title: 'Финансовая перспектива',
+      subtitle:
+        'На пути к увеличению дохода могут появиться препятствия и конкуренция, но это скорее стимулирует тебя бороться за своё место под солнцем. Этот вызов заставит взглянуть на ключевые вопросы по-новому и найти свежие подходы.',
+    },
+    {
+      image: cardImages['5'],
+      label: '10 Кубков',
+      title: 'Совет / ключ к успеху',
+      subtitle:
+        'Фокусируйся на гармонии и эмоциональном удовлетворении от того, что делаешь. Семья, друзья и личное счастье должны оставаться приоритетом, так как они дают энергию для профессиональных свершений. Обрати внимание на баланс между работой и жизнью.',
+    },
+  ];
+
   const plans = useMemo(
     () => [
       {
@@ -74,11 +113,7 @@ const TarotResult = () => {
     // navigate(`/tarot/${id}?count=${count}`)
     setOpen(true);
   };
-
-  const handleSelectPlan = (planId) => {
-    setSelectedPlanId(planId);
-  };
-
+  const handleSelectPlan = (planId) => setSelectedPlanId(planId);
   const handlePay = () => {
     if (!selectedPlan) return;
     navigate(`/`, { replace: true });
@@ -110,6 +145,16 @@ const TarotResult = () => {
               <CardImg key={num} src={cardImages[num]} alt={`Карта ${num}`} />
             ))}
           </CardsRow>
+
+          {sections.map((s, i) => (
+            <TarotResume
+              key={i}
+              image={s.image}
+              label={s.label}
+              title={s.title}
+              subtitle={s.subtitle}
+            />
+          ))}
 
           <ResumeWrapper>
             <InfoCard
