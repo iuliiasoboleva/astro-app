@@ -7,7 +7,7 @@ import moneyCircle from '../../assets/images/money-circle.png';
 import sadCircle from '../../assets/images/sad-circle.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
-import cards from '../../mocks/cards';
+import cards from '../../mocks/cardsTarot';
 import { FILTER_ITEMS } from '../../mocks/tabsFilter';
 import CustomCategoryCard from '../../ui/CustomCategoryCard';
 import CustomTabs from '../../ui/CustomTabs';

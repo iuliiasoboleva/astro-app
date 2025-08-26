@@ -1,21 +1,12 @@
 import styled from 'styled-components';
 
-import model from '../../assets/images/model-full.png';
+import mainBg from '../../assets/images/main-background.png';
 
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  background:
-    url(${model}) right -5px top 18px / auto 100% no-repeat,
-    radial-gradient(34% 28% at 82% -10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
-    linear-gradient(
-      200deg,
-      rgba(255, 255, 255, 0) 0% 58%,
-      rgba(255, 255, 255, 0.9) 78%,
-      #ffffff 100%
-    ),
-    radial-gradient(62% 58% at 25% 15%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 62%),
-    linear-gradient(180deg, #4f87c6 0%, #8fbbe3 34%, #cfe8fb 62%, #f5fbff 100%);
+  background: url(${mainBg}) center center / cover no-repeat;
+  min-height: 100vh;
 `;
 
 export const Hero = styled.header`
@@ -32,7 +23,6 @@ export const SoftBlock = styled.div`
   background: linear-gradient(180deg, #f9fcff 0%, #fff 100%);
   height: 100%;
   flex-shrink: 0;
-  margin-top: auto;
   padding: 15px;
   display: flex;
   flex-direction: column;

@@ -4,7 +4,7 @@ import starsActive from './assets/icons/stars-active.svg';
 import starsInactive from './assets/icons/stars-inactive.svg';
 import tarotActive from './assets/icons/taro-active.svg';
 import tarotInactive from './assets/icons/taro-inactive.svg';
-import cards from './mocks/cards';
+import cards from './mocks/cardsTarot';
 import CustomButton from './ui/CustomButton';
 import CustomCategoryCard from './ui/CustomCategoryCard';
 import CustomStatusUser from './ui/CustomStatusUser';

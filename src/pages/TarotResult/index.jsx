@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
 import cardsIcon from '../../assets/icons/cards.svg';
-import resumeIcon from '../../assets/images/resume/tarot/compass.png';
+import resumeIcon from '../../assets/images/resume/tarot/relationship.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import Subscription from '../../components/Subscription';
@@ -25,11 +25,11 @@ import {
   TopTitle,
 } from './styles';
 
-const cards = import.meta.glob('../../assets/images/cards/*.png', { eager: true });
+const cards = import.meta.glob('../../assets/images/cards/*.jpg', { eager: true });
 const cardImages = Object.fromEntries(
   Object.entries(cards).map(([path, module]) => {
     const fileName = path.split('/').pop();
-    const id = fileName?.replace('.png', '');
+    const id = fileName?.replace('.jpg', '');
     return [id, module.default];
   }),
 );

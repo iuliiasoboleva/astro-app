@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 
+import topBg from '../../assets/images/top-background.png';
+
 export const TopTitle = styled.h2`
   color: #fff;
   font-family: var(--font-sfpro);
@@ -12,7 +14,6 @@ export const TopTitle = styled.h2`
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  background: linear-gradient(151deg, #4d92c8 1.82%, #5a99cc 19.63%, #bad9f1 61.54%);
 `;
 
 export const TitleBlock = styled.header`
@@ -20,6 +21,7 @@ export const TitleBlock = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url(${topBg}) top center / cover no-repeat;
   min-height: 120px;
   padding: 15px;
 

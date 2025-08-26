@@ -1,27 +1,30 @@
-import bagBg from '../assets/images/templates/tarot/bag.png';
-import batteryBg from '../assets/images/templates/tarot/battery.png';
-import buggyBg from '../assets/images/templates/tarot/buggy.png';
-import cardsBg from '../assets/images/templates/tarot/cards.png';
-import compassBg from '../assets/images/templates/tarot/compass.png';
+import adviceIcon from '../assets/images/resume/tarot/advice.png';
+import boyfriendIcon from '../assets/images/resume/tarot/boyfriend.png';
+import businessIcon from '../assets/images/resume/tarot/business.png';
+import financeIcon from '../assets/images/resume/tarot/finance.png';
+import futureIcon from '../assets/images/resume/tarot/future.png';
+import relationshipIcon from '../assets/images/resume/tarot/relationship.png';
+import twoPathsIcon from '../assets/images/resume/tarot/twopaths.png';
+import wayIcon from '../assets/images/resume/tarot/way.png';
+import wheelIcon from '../assets/images/resume/tarot/wheel.png';
+import yesnoIcon from '../assets/images/resume/tarot/yesno.png';
+import adviceBg from '../assets/images/templates/tarot/advice.png';
+import boyfriendBg from '../assets/images/templates/tarot/boyfriend.png';
+import businessBg from '../assets/images/templates/tarot/business.png';
 import financeBg from '../assets/images/templates/tarot/finance.png';
-import fiveStarBg from '../assets/images/templates/tarot/five-star.png';
-import fourStarBg from '../assets/images/templates/tarot/four-star.png';
-import girlBg from '../assets/images/templates/tarot/girl.png';
-import healthBg from '../assets/images/templates/tarot/health.png';
-import heartsBg from '../assets/images/templates/tarot/hearts.png';
-import lensBg from '../assets/images/templates/tarot/lens.png';
-import lightBg from '../assets/images/templates/tarot/light.png';
-import pathsBg from '../assets/images/templates/tarot/paths.png';
-import personBg from '../assets/images/templates/tarot/person.png';
-import sectorBg from '../assets/images/templates/tarot/sector.png';
-import starBg from '../assets/images/templates/tarot/star.png';
-import sunBg from '../assets/images/templates/tarot/sun.png';
+import futureBg from '../assets/images/templates/tarot/future.png';
+import relationshipBg from '../assets/images/templates/tarot/relationship.png';
+import twoPathsBg from '../assets/images/templates/tarot/twopaths.png';
+import wayBg from '../assets/images/templates/tarot/way.png';
+import wheelBg from '../assets/images/templates/tarot/wheel.png';
+import yesnoBg from '../assets/images/templates/tarot/yesno.png';
 
 const raw = [
   {
     id: 1,
     title: 'Расклад\nна отношения',
-    bg: heartsBg,
+    icon: relationshipIcon,
+    bg: relationshipBg,
     free: true,
     subscription: false,
     purchased: false,
@@ -30,7 +33,8 @@ const raw = [
   {
     id: 2,
     title: 'Расклад\nна выбор парня',
-    bg: personBg,
+    icon: boyfriendIcon,
+    bg: boyfriendBg,
     free: true,
     subscription: false,
     purchased: false,
@@ -39,7 +43,8 @@ const raw = [
   {
     id: 3,
     title: 'Расклад\nна «Да/Нет»',
-    bg: compassBg,
+    icon: yesnoIcon,
+    bg: yesnoBg,
     free: false,
     subscription: false,
     purchased: false,
@@ -47,7 +52,8 @@ const raw = [
   {
     id: 4,
     title: 'Расклад на выбор\n«Два пути»',
-    bg: pathsBg,
+    icon: twoPathsIcon,
+    bg: twoPathsBg,
     free: false,
     subscription: false,
     purchased: false,
@@ -55,7 +61,8 @@ const raw = [
   {
     id: 5,
     title: 'Расклад\nна будущее',
-    bg: starBg,
+    icon: futureIcon,
+    bg: futureBg,
     free: false,
     subscription: false,
     purchased: true,
@@ -63,7 +70,8 @@ const raw = [
   {
     id: 6,
     title: 'Расклад на работу\nи бизнес',
-    bg: bagBg,
+    icon: businessIcon,
+    bg: businessBg,
     free: false,
     subscription: true,
     purchased: false,
@@ -71,7 +79,8 @@ const raw = [
   {
     id: 7,
     title: 'Расклад\n«Совет от карт»',
-    bg: cardsBg,
+    icon: adviceIcon,
+    bg: adviceBg,
     free: false,
     subscription: true,
     purchased: false,
@@ -79,7 +88,8 @@ const raw = [
   {
     id: 8,
     title: 'Расклад\n«Колесо года»',
-    bg: fiveStarBg,
+    icon: wheelIcon,
+    bg: wheelBg,
     free: false,
     subscription: true,
     purchased: false,
@@ -87,7 +97,8 @@ const raw = [
   {
     id: 9,
     title: 'Расклад\nна духовный путь',
-    bg: fourStarBg,
+    icon: wayIcon,
+    bg: wayBg,
     free: false,
     subscription: true,
     purchased: false,
@@ -95,6 +106,7 @@ const raw = [
   {
     id: 10,
     title: 'Расклад\nна финансы',
+    icon: financeIcon,
     bg: financeBg,
     free: false,
     subscription: true,
