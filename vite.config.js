@@ -18,4 +18,27 @@ export default defineConfig({
       },
     }),
   ],
+
+  server: {
+    host: true,
+    headers: {
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  },
+  preview: {
+    headers: {
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  },
+
+  build: {
+    assetsInlineLimit: 0,
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name]-[hash][extname]",
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+      },
+    },
+  },
 });

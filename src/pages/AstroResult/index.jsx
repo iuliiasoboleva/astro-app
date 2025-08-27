@@ -3,28 +3,47 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import astroIcon from '../../assets/icons/astro.svg';
+import calendarIcon from '../../assets/icons/calendar.svg';
+import locationIcon from '../../assets/icons/location.svg';
+import nameIcon from '../../assets/icons/name.svg';
+import planetBackground from '../../assets/images/planet-background.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import Subscription from '../../components/Subscription';
-import TarotResume from '../../components/TarotResume';
+import { astroCategoryById } from '../../mocks/astroCategories';
+import { astroResume } from '../../mocks/astroResume';
 import { plans } from '../../mocks/tariffs';
-import { tarotCategoryById } from '../../mocks/tarotCategories';
-import { fullResume, tarotResume } from '../../mocks/tarotResume';
-import { tarotById } from '../../mocks/tarotValues';
-import { resetSession, selectTarot } from '../../store/tarotSessionSlice';
+import { fullResume } from '../../mocks/tarotResume';
+import { resetAstroForm } from '../../store/astroStepsSlice';
 import CustomButton from '../../ui/CustomButton';
 import {
   ButtonBlock,
-  CardImg,
-  CardsRow,
+  Card,
   ContentWrapper,
+  IconWrap,
+  Image,
+  InfoBlock,
+  InfoSubtitle,
+  InfoTitle,
+  Label,
+  Left,
   MainTitle,
   ResumeWrapper,
+  Right,
+  Row,
   Subtitle,
   Title,
   TitleWrapper,
+  TopBlock,
+  Value,
 } from './styles';
+
+const fields = [
+  { key: 'name', label: 'Ваше имя:', icon: nameIcon },
+  { key: 'birthDate', label: 'Дата рождения:', icon: calendarIcon },
+  { key: 'birthPlace', label: 'Место рождения:', icon: locationIcon },
+];
 
 const AstroResult = () => {
   const navigate = useNavigate();
@@ -33,8 +52,7 @@ const AstroResult = () => {
 
   const [open, setOpen] = useState(false);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
-
-  const { picked } = useSelector(selectTarot);
+  const { form } = useSelector((s) => s.astroSteps || {});
 
   const selectedPlan = useMemo(
     () => plans.find((p) => p.id === selectedPlanId) || null,
@@ -53,21 +71,18 @@ const AstroResult = () => {
   };
 
   const handleBack = () => {
-    dispatch(resetSession());
+    dispatch(resetAstroForm());
     navigate(-1);
   };
 
-  const category = tarotCategoryById?.[String(id)] || null;
+  const goHome = () => {
+    dispatch(resetAstroForm());
+    navigate('/');
+  };
+
+  const category = astroCategoryById?.[String(id)] || null;
   const categoryIcon = category?.icon;
   const categoryShortTitle = category?.shortTitle;
-
-  const roles =
-    (tarotResume?.length ?? 0) > 0
-      ? Array.from({ length: picked.length }, (_, i) => tarotResume[i % tarotResume.length])
-      : Array.from({ length: picked.length }, (_, i) => ({
-          title: `Позиция ${i + 1}`,
-          subtitle: '',
-        }));
 
   return (
     <>
@@ -78,41 +93,55 @@ const AstroResult = () => {
         tagLabel={categoryShortTitle}
       >
         <TitleWrapper>
-          <MainTitle>Ваш расклад Таро</MainTitle>
+          <MainTitle>Ваш Астрологический расклад</MainTitle>
           <Subtitle>Листайте вниз, чтобы узнать подробнее</Subtitle>
         </TitleWrapper>
 
-        <CardsRow>
-          {picked.map((pid) => {
-            const card = tarotById[pid];
-            if (!card?.image) return null;
-            return <CardImg key={pid} src={card.image} alt={card.title || `Карта ${pid}`} />;
-          })}
-        </CardsRow>
+        <TopBlock>
+          <Image src={planetBackground} alt="" />
+          <Card aria-label="Ваши данные">
+            {fields.map(({ key, label, icon }) => {
+              const raw = form?.[key];
+              const value =
+                typeof raw === 'string' && raw.trim().length > 0
+                  ? raw
+                  : key === 'gender'
+                    ? raw === 'm'
+                      ? 'Мужской'
+                      : raw === 'f'
+                        ? 'Женский'
+                        : '—'
+                    : '—';
 
-        {picked.map((pid, i) => {
-          const card = tarotById[pid];
-          const role = roles[i];
-          if (!card?.image) return null;
-
-          return (
-            <TarotResume
-              key={`${pid}-${i}`}
-              image={card.image}
-              label={card.title}
-              title={role.title}
-              subtitle={role.subtitle}
-            />
-          );
-        })}
-
+              return (
+                <Row key={key}>
+                  <Left>
+                    <IconWrap>
+                      <img src={icon} alt="" />
+                    </IconWrap>
+                    <Label>{label}</Label>
+                  </Left>
+                  <Right>
+                    <Value title={value}>{value}</Value>
+                  </Right>
+                </Row>
+              );
+            })}
+          </Card>
+        </TopBlock>
+        {astroResume.map((block) => (
+          <InfoBlock key={block.id}>
+            <InfoTitle>{block.title}</InfoTitle>
+            <InfoSubtitle>{block.text}</InfoSubtitle>
+          </InfoBlock>
+        ))}
         <ResumeWrapper>
           <InfoCard icon={categoryIcon} title="Общий вывод" subtitle={fullResume} />
         </ResumeWrapper>
 
         <ButtonBlock>
           <CustomButton onClick={handleOpenSubscriptions}>Сделать еще расклад</CustomButton>
-          <CustomButton variant="outline" onClick={() => navigate('/')}>
+          <CustomButton variant="outline" onClick={goHome}>
             Вернуться на главную
           </CustomButton>
         </ButtonBlock>

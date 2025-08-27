@@ -337,9 +337,7 @@ const AstroSteps = () => {
           )}
 
           <ButtonBlock>
-            <CustomButton onClick={() => next(false)}>
-              {step === stepsTotal - 1 ? 'Подтвердить' : 'Продолжить'}
-            </CustomButton>
+            <CustomButton onClick={() => next(false)}>Продолжить</CustomButton>
             <CustomButton variant="outline" onClick={handleSkip}>
               Не хочу отвечать, пропустить
             </CustomButton>

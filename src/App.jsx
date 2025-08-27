@@ -6,6 +6,7 @@ import homeIcon from './assets/icons/home.svg';
 import userIcon from './assets/icons/profile.svg';
 import BottomTabs from './components/BottomTabs';
 import ScrollToTop from './hooks/ScrollToTop';
+import { usePreloadImages } from './hooks/usePreloadImages';
 import astroCategories from './mocks/astroCategories';
 import tarotCategories from './mocks/tarotCategories';
 import AstroRequest from './pages/AstroRequest';
@@ -25,18 +26,21 @@ const TABS = [
 ];
 
 function Layout() {
+  const astroAssets = astroCategories.flatMap((c) => [c.icon, c.bg]);
+  const tarotAssets = tarotCategories.flatMap((c) => [c.icon, c.bg]);
+
+  usePreloadImages([...astroAssets, ...tarotAssets]);
+
   return (
     <AppWrap>
       <ScrollToTop />
       <Content>
         <Outlet />
       </Content>
-
       <BottomTabs items={TABS} />
     </AppWrap>
   );
 }
-
 export default function App() {
   return (
     <Routes>

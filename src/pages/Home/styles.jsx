@@ -5,13 +5,20 @@ import mainBg from '../../assets/images/main-background.png';
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  background: url(${mainBg}) center center / cover no-repeat;
   min-height: 100vh;
+  height: 100%;
+  background: #f9fcff;
+  z-index: 0;
+  background: url(${mainBg}) center center / cover no-repeat;
+  background-size: cover;
+  background-position: center top;
+  flex-shrink: 0;
+  z-index: 0;
 `;
 
 export const Hero = styled.header`
   position: relative;
-  min-height: 306px;
+  min-height: 275px;
   height: 100%;
   padding: 15px;
   display: flex;
@@ -27,6 +34,8 @@ export const SoftBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  z-index: 1;
+  width: 100%;
 `;
 
 export const TitleBlock = styled.div`

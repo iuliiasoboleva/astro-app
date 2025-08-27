@@ -58,6 +58,10 @@ const TarotResult = () => {
     navigate(-1);
   };
 
+  const goHome = () => {
+    dispatch(resetSession());
+    navigate('/');
+  };
   const category = tarotCategoryById?.[String(id)] || null;
   const categoryIcon = category?.icon;
   const categoryShortTitle = category?.shortTitle;
@@ -113,7 +117,7 @@ const TarotResult = () => {
 
         <ButtonBlock>
           <CustomButton onClick={handleOpenSubscriptions}>Сделать еще расклад</CustomButton>
-          <CustomButton variant="outline" onClick={() => navigate('/')}>
+          <CustomButton variant="outline" onClick={goHome}>
             Вернуться на главную
           </CustomButton>
         </ButtonBlock>

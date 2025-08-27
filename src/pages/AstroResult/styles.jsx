@@ -44,21 +44,6 @@ export const ResumeWrapper = styled.div`
   margin-top: 40px;
 `;
 
-export const CardsRow = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 8px 0 30px;
-  flex-wrap: wrap;
-  align-self: center;
-`;
-
-export const CardImg = styled.img`
-  width: 62px;
-  height: auto;
-  border-radius: 10px;
-`;
-
 export const Title = styled.h3`
   color: #1f3541;
   font-family: var(--font-sfpro);
@@ -74,4 +59,103 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   margin: 20px 0;
+`;
+
+export const Card = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+`;
+
+export const Row = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const Left = styled.div`
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 6px;
+`;
+
+export const IconWrap = styled.span`
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+`;
+
+export const Label = styled.span`
+  color: #1f3541;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const Right = styled.div`
+  text-align: right;
+  min-width: 0;
+`;
+
+export const Value = styled.span`
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #546e7d;
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const TopBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid #f2f4f6;
+  background: #fff;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+export const InfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 14px;
+  align-self: stretch;
+  border-radius: 20px;
+  border: 1px solid #e2eaf1;
+  background: #fff;
+`;
+
+export const InfoTitle = styled.h3`
+  color: #1f3541;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const InfoSubtitle = styled.p`
+  color: #546e7d;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.8px;
 `;
