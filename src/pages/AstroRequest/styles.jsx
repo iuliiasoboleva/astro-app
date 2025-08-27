@@ -23,31 +23,15 @@ export const ButtonBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 28px;
   width: 100%;
 `;
 
 export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
   padding: 0 10px;
-`;
-
-export const Textarea = styled.textarea`
-  color: #a4aab1;
-  font-family: var(--font-sfpro);
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: -0.45px;
-  height: 240px;
-  padding: 20px;
-  border-radius: 15px;
-  border: 1px solid #e2eaf1;
-  background: #fff;
-  width: 100%;
-  margin-top: 16px;
+  margin-top: 4px;
 `;

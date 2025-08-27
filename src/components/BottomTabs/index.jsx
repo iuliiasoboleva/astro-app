@@ -1,22 +1,32 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetSession } from '../../store/tarotSessionSlice';
+import { useLocation } from 'react-router-dom';
 
+import { resetAstroForm } from '../../store/astroStepsSlice';
+import { resetSession } from '../../store/tarotSessionSlice';
 import { Bar, Icon, Item, Label } from './styles';
 
-const CHILD_OF_HOME = ['/tarot'];
+const CHILD_OF_HOME = ['/tarot', '/astro'];
 
 const BottomTabs = ({ items = [], className }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { picked = [], question = '', status = 'idle' } =
-    useSelector((s) => s.tarotSession || {});
+  const { picked = [], question = '', status = 'idle' } = useSelector((s) => s.tarotSession || {});
+  const astroForm = useSelector((s) => s.astroSteps?.form || {});
+  const { gender, birthDate, birthTime, birthPlace, name } = astroForm;
 
   const hasActiveSession =
     (Array.isArray(picked) && picked.length > 0) ||
     (typeof question === 'string' && question.trim().length > 0) ||
     (status !== 'idle' && status !== 'done' && status !== 'error');
+
+  const hasAstroData =
+    gender === 'm' ||
+    gender === 'f' ||
+    !!birthDate ||
+    !!birthTime ||
+    (birthPlace && birthPlace.trim().length > 0) ||
+    (name && name.trim().length > 0);
 
   return (
     <Bar role="tablist" aria-label="Главное меню" className={className}>
@@ -34,6 +44,7 @@ const BottomTabs = ({ items = [], className }) => {
             data-active={isChildOfHome ? 'true' : undefined}
             onClick={() => {
               if (hasActiveSession) dispatch(resetSession());
+              if (hasAstroData) dispatch(resetAstroForm());
             }}
           >
             <Icon $src={it.icon} aria-hidden />

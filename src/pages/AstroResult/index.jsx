@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import cardsIcon from '../../assets/icons/cards.svg';
+import astroIcon from '../../assets/icons/astro.svg';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import ScreenHeader from '../../components/ScreenHeader';
@@ -26,7 +26,7 @@ import {
   TitleWrapper,
 } from './styles';
 
-const TarotResult = () => {
+const AstroResult = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -42,7 +42,6 @@ const TarotResult = () => {
   );
 
   const handleOpenSubscriptions = () => {
-    // navigate(`/tarot/${id}?count=${count}`)
     setOpen(true);
   };
 
@@ -74,8 +73,8 @@ const TarotResult = () => {
     <>
       <ScreenHeader
         onBack={handleBack}
-        topTitle="Расклад Таро"
-        tagIcon={cardsIcon}
+        topTitle="Астрология"
+        tagIcon={astroIcon}
         tagLabel={categoryShortTitle}
       >
         <TitleWrapper>
@@ -150,4 +149,4 @@ const TarotResult = () => {
   );
 };
 
-export default TarotResult;
+export default AstroResult;

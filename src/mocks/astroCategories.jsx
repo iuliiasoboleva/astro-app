@@ -31,7 +31,6 @@ const raw = [
     free: true,
     subscription: false,
     purchased: false,
-    count: 5,
   },
   {
     id: 2,
@@ -42,7 +41,6 @@ const raw = [
     free: true,
     subscription: false,
     purchased: false,
-    count: 3,
   },
   {
     id: 3,
@@ -66,7 +64,7 @@ const raw = [
   },
   {
     id: 5,
-    title: 'Рассчет натальной\nкарты целиком',
+    title: 'Расчет натальной\nкарты целиком',
     shortTitle: '«Натальная карта»',
     icon: fullIcon,
     bg: fullBg,
@@ -136,11 +134,9 @@ const raw = [
   },
 ];
 
-const computeStatus = (card) => {
-  if (card.purchased) return 'purchased';
-  if (card.free || card.subscription) return 'default';
-  return 'locked';
-};
+const computeStatus = (card) =>
+  card.purchased ? 'purchased' : card.free || card.subscription ? 'default' : 'locked';
 
-const cards = raw.map((c) => ({ ...c, status: computeStatus(c) }));
-export default cards;
+export const astroCategories = raw.map((c) => ({ ...c, status: computeStatus(c) }));
+export const astroCategoryById = Object.fromEntries(astroCategories.map((c) => [String(c.id), c]));
+export default astroCategories;

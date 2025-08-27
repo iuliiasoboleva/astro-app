@@ -38,7 +38,7 @@ export const GlobalStyle = createGlobalStyle`
   a { color: inherit; text-decoration: none; }
 
   button, input, optgroup, select, textarea {
-    font: inherit;
+    font-family: var(--font-inter);
     color: inherit;
     letter-spacing: inherit;
     background: transparent;

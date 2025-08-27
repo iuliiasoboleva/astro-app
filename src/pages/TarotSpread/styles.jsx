@@ -14,6 +14,7 @@ export const TopTitle = styled.h2`
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
+  background: url(${topBg}) top center / contain no-repeat;
 `;
 
 export const TitleBlock = styled.header`
@@ -21,7 +22,6 @@ export const TitleBlock = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(${topBg}) top center / cover no-repeat;
   min-height: 120px;
   padding: 15px;
 
@@ -37,7 +37,6 @@ export const TitleBlock = styled.header`
 export const SoftBlock = styled.section`
   border-radius: 35px 35px 0 0;
   background: linear-gradient(180deg, #f9fcff 0%, #fff 100%);
-  margin-top: 8px;
   overflow: hidden;
   padding-bottom: 80px;
 `;

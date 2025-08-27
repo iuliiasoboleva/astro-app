@@ -1,15 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
-import cardCircle from '../../assets/images/card-circle.png';
-import moneyCircle from '../../assets/images/money-circle.png';
-import sadCircle from '../../assets/images/sad-circle.png';
+import moneyAstroCircle from '../../assets/images/money-astro-circle.png';
+import moneyTarotCircle from '../../assets/images/money-tarot-circle.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
+import { PAGE_COPY } from '../../mocks/categoriesPageText';
 import { FILTER_ITEMS } from '../../mocks/tabsFilter';
-import cards from '../../mocks/tarotCategories';
 import { resetSession, startSession } from '../../store/tarotSessionSlice';
 import CustomCategoryCard from '../../ui/CustomCategoryCard';
 import CustomTabs from '../../ui/CustomTabs';
@@ -23,11 +22,21 @@ import {
   TopTitle,
 } from './styles';
 
-const Tarot = () => {
+const Categories = ({ cards }) => {
   const [filter, setFilter] = useState('free');
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
+  const routeKey = (pathname.split('/')[1] || 'tarot').toLowerCase();
+  const copy = PAGE_COPY[routeKey] || PAGE_COPY.tarot;
+
+  const SHEET_ICON = {
+    tarot: moneyTarotCircle,
+    astro: moneyAstroCircle,
+  };
+  const moneyCircle = SHEET_ICON[routeKey];
 
   const filteredCards = useMemo(() => {
     switch (filter) {
@@ -50,8 +59,7 @@ const Tarot = () => {
       setOpen(true);
     } else {
       dispatch(startSession({ categoryId: card.id, requiredCount: card.count }));
-
-      navigate(`/tarot/${card.id}`);
+      navigate(`/${routeKey}/${card.id}`);
     }
   };
 
@@ -65,40 +73,33 @@ const Tarot = () => {
       <Page>
         <TitleBlock>
           <img src={arrowBack} alt="Назад" onClick={handleBack} style={{ cursor: 'pointer' }} />
-          <TopTitle>Расклад Таро</TopTitle>
+          <TopTitle>{copy.topTitle}</TopTitle>
         </TitleBlock>
 
         <SoftBlock>
           <CustomTabs items={FILTER_ITEMS} value={filter} onChange={setFilter} />
           {filteredCards.length === 0 ? (
             <NotCardsInfo>
-              <InfoCard
-                icon={filter === 'subscription' ? sadCircle : cardCircle}
-                title={
-                  filter === 'subscription'
-                    ? 'У вас ещё нет подписки'
-                    : 'У вас пока нет купленных раскладов'
-                }
-                subtitle={
-                  filter === 'subscription'
-                    ? 'Оформите подписку и получите полный доступ ко всем закрытым раскладам — без доплат и ограничений.'
-                    : 'Вы можете приобрести любой расклад отдельно — и пользоваться им без ограничений в любое время.'
-                }
-                buttonLabel={
-                  filter === 'subscription' ? 'Оформить подписку' : 'Открыть магазин раскладов'
-                }
-                onButtonClick={() => {
-                  () => setOpen(false);
-                }}
-              />
+              {(() => {
+                const stateKey = filter === 'subscription' ? 'subscription' : 'purchased';
+                const empty = copy.empty[stateKey];
+                return (
+                  <InfoCard
+                    icon={empty.icon}
+                    title={empty.title}
+                    subtitle={empty.subtitle}
+                    buttonLabel={empty.buttonLabel}
+                    onButtonClick={() => {
+                      if (stateKey === 'subscription') setOpen(true);
+                      else navigate('/');
+                    }}
+                  />
+                );
+              })()}
             </NotCardsInfo>
           ) : (
             <>
-              <MainTitle>
-                Какой расклад Таро
-                <br />
-                хотите попробовать?
-              </MainTitle>
+              <MainTitle>{copy.mainTitle}</MainTitle>
 
               <CardsGrid>
                 {filteredCards.map((card) => (
@@ -130,7 +131,7 @@ const Tarot = () => {
             subtitle=""
             buttonLabel="Оформить подписку"
             onButtonClick={() => {
-              () => setOpen(false);
+              setOpen(false);
             }}
           />
         </div>
@@ -139,4 +140,4 @@ const Tarot = () => {
   );
 };
 
-export default Tarot;
+export default Categories;
