@@ -159,3 +159,37 @@ export const InfoSubtitle = styled.p`
   font-weight: 400;
   line-height: 16.8px;
 `;
+
+export const QuestionBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 10px;
+  border-radius: 15px;
+  border: 1px solid #e2eaf1;
+  background: #fff;
+`;
+
+export const QuestionTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #1f3541;
+  font-family: var(--font-sfpro);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14.4px;
+  letter-spacing: -0.36px;
+`;
+
+export const QuestionText = styled.p`
+  color: #546e7d;
+  font-family: var(--font-sfpro);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.42px;
+`;

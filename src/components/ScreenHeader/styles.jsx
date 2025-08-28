@@ -1,4 +1,3 @@
-// styles.jsx
 import styled from 'styled-components';
 
 import topBg from '../../assets/images/top-background.png';
@@ -63,4 +62,10 @@ export const SoftBlock = styled.section`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+`;
+
+export const TagBlock = styled.div`
+  display: flex;
+  gap: 6px;
+  margin: 0 10px;
 `;

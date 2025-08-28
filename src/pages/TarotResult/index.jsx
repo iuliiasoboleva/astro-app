@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import cardsIcon from '../../assets/icons/cards.svg';
+import questionIcon from '../../assets/icons/message-chat-circle.svg';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
 import ScreenHeader from '../../components/ScreenHeader';
@@ -20,6 +21,9 @@ import {
   CardsRow,
   ContentWrapper,
   MainTitle,
+  QuestionBlock,
+  QuestionText,
+  QuestionTitle,
   ResumeWrapper,
   Subtitle,
   Title,
@@ -36,13 +40,16 @@ const TarotResult = () => {
 
   const { picked } = useSelector(selectTarot);
 
+  const location = useLocation();
+  const fromArchive = location.state?.fromArchive;
+  const archiveMeta = location.state?.meta || {};
+
   const selectedPlan = useMemo(
     () => plans.find((p) => p.id === selectedPlanId) || null,
     [plans, selectedPlanId],
   );
 
   const handleOpenSubscriptions = () => {
-    // navigate(`/tarot/${id}?count=${count}`)
     setOpen(true);
   };
 
@@ -81,12 +88,22 @@ const TarotResult = () => {
         topTitle="Расклад Таро"
         tagIcon={cardsIcon}
         tagLabel={categoryShortTitle}
+        fromArchive={fromArchive}
+        date={archiveMeta?.date}
       >
         <TitleWrapper>
           <MainTitle>Ваш расклад Таро</MainTitle>
           <Subtitle>Листайте вниз, чтобы узнать подробнее</Subtitle>
         </TitleWrapper>
-
+        {fromArchive && archiveMeta?.question && (
+          <QuestionBlock>
+            <QuestionTitle>
+              <img src={questionIcon} width={12} height={12} alt="" />
+              <p>Ваш вопрос:</p>
+            </QuestionTitle>
+            <QuestionText>{archiveMeta.question}</QuestionText>
+          </QuestionBlock>
+        )}
         <CardsRow>
           {picked.map((pid) => {
             const card = tarotById[pid];

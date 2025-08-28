@@ -1,8 +1,9 @@
 import React from 'react';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
+import clockIcon from '../../assets/icons/story-clock.svg';
 import TagButton from '../../components/TagButton';
-import { Page, SoftBlock, TitleBlock, TopTitle } from './styles';
+import { Page, SoftBlock, TagBlock, TitleBlock, TopTitle } from './styles';
 
 const ScreenScaffold = ({
   onBack,
@@ -10,6 +11,8 @@ const ScreenScaffold = ({
   tagIcon,
   tagLabel,
   backIcon = arrowBack,
+  fromArchive,
+  date,
   children,
 }) => {
   return (
@@ -20,7 +23,10 @@ const ScreenScaffold = ({
       </TitleBlock>
 
       <SoftBlock>
-        {tagIcon && tagLabel ? <TagButton icon={tagIcon} label={tagLabel} /> : null}
+        <TagBlock>
+          {tagIcon && tagLabel ? <TagButton icon={tagIcon} label={tagLabel} /> : null}
+          {fromArchive && date ? <TagButton icon={clockIcon} label={date} /> : null}
+        </TagBlock>
         {children}
       </SoftBlock>
     </Page>

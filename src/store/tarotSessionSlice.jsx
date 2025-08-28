@@ -31,10 +31,10 @@ const tarotSessionSlice = createSlice({
   initialState,
   reducers: {
     startSession(state, action) {
-      const { categoryId, requiredCount } = action.payload;
+      const { categoryId, requiredCount, picked } = action.payload;
       state.categoryId = String(categoryId);
       state.requiredCount = requiredCount ?? null;
-      state.picked = [];
+      state.picked = Array.isArray(picked) ? picked : [];
       state.question = '';
       state.status = 'collecting';
       state.error = null;

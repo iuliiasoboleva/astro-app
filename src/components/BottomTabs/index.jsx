@@ -9,7 +9,10 @@ import { Bar, Icon, Item, Label } from './styles';
 const CHILD_OF_HOME = ['/tarot', '/astro'];
 
 const BottomTabs = ({ items = [], className }) => {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname, state } = location;
+  const fromArchive = !!state?.fromArchive;
+
   const dispatch = useDispatch();
   const { picked = [], question = '', status = 'idle' } = useSelector((s) => s.tarotSession || {});
   const astroForm = useSelector((s) => s.astroSteps?.form || {});
@@ -28,12 +31,21 @@ const BottomTabs = ({ items = [], className }) => {
     (birthPlace && birthPlace.trim().length > 0) ||
     (name && name.trim().length > 0);
 
+  const forceArchiveActive =
+    fromArchive && (pathname.startsWith('/tarot') || pathname.startsWith('/astro'));
+
   return (
     <Bar role="tablist" aria-label="Главное меню" className={className}>
       {items.map((it) => {
         const isHome = it.to === '/';
+        const isArchiveTab = it.to === '/archive';
+
         const isChildOfHome =
-          isHome && (pathname === '/' || CHILD_OF_HOME.some((p) => pathname.startsWith(p)));
+          !forceArchiveActive &&
+          isHome &&
+          (pathname === '/' || CHILD_OF_HOME.some((p) => pathname.startsWith(p)));
+
+        const forceActive = (isHome && isChildOfHome) || (isArchiveTab && forceArchiveActive);
 
         return (
           <Item
@@ -41,7 +53,7 @@ const BottomTabs = ({ items = [], className }) => {
             to={it.to}
             end={it.to === '/'}
             aria-label={it.label}
-            data-active={isChildOfHome ? 'true' : undefined}
+            data-active={forceActive ? 'true' : undefined}
             onClick={() => {
               if (hasActiveSession) dispatch(resetSession());
               if (hasAstroData) dispatch(resetAstroForm());
