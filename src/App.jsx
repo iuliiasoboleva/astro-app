@@ -9,6 +9,7 @@ import ScrollToTop from './hooks/ScrollToTop';
 import { usePreloadImages } from './hooks/usePreloadImages';
 import astroCategories from './mocks/astroCategories';
 import tarotCategories from './mocks/tarotCategories';
+import Archive from './pages/Archive';
 import AstroRequest from './pages/AstroRequest';
 import AstroResult from './pages/AstroResult';
 import AstroSteps from './pages/AstroSteps';
@@ -21,7 +22,7 @@ import { AppWrap, Content } from './styles';
 
 const TABS = [
   { to: '/', label: 'Главная', icon: homeIcon },
-  { to: '/history', label: 'История', icon: timeIcon },
+  { to: '/archive', label: 'История', icon: timeIcon },
   { to: '/profile', label: 'Профиль', icon: userIcon },
 ];
 
@@ -54,7 +55,7 @@ export default function App() {
         <Route path="tarot/:id" element={<TarotRequest />} />
         <Route path="tarot/:id/spread" element={<TarotSpread />} />
         <Route path="tarot/:id/result" element={<TarotResult />} />
-        <Route path="history" element={<div>История (заглушка)</div>} />
+        <Route path="archive" element={<Archive />} />
         <Route path="profile" element={<div>Профиль (заглушка)</div>} />
       </Route>
     </Routes>
