@@ -26,8 +26,8 @@ export const Name = styled.span`
   font-weight: 500;
   color: #1f3541;
   font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 26.4px;
+  letter-spacing: -0.66px;
 `;
 
 export const Badge = styled.span`

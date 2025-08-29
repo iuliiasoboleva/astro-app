@@ -19,6 +19,7 @@ export const StyledButton = styled.button`
   color: #fff;
   user-select: none;
   transition: all 0.2s ease;
+  outline: none;
 
   ${({ $variant }) =>
     $variant === 'solid' &&
@@ -34,6 +35,14 @@ export const StyledButton = styled.button`
       background: transparent;
       border: 1px solid #c1d0de;
       color: #c1d0de; /* text & spinner color */
+    `}
+
+     ${({ $variant }) =>
+    $variant === 'cancel' &&
+    css`
+      background: transparent;
+      border: 1px solid #ff565c;
+      color: #ff565c;
     `}
 
   &:hover:not(:disabled) {

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import checkIcon from '../../assets/icons/check.svg';
+import CustomButton from '../../ui/CustomButton';
 import {
   Badge,
   FeatureItem,
@@ -13,7 +14,7 @@ import {
   Wrapper,
 } from './styles';
 
-const Subscription = ({
+const Plan = ({
   price,
   period,
   title,
@@ -22,6 +23,8 @@ const Subscription = ({
   badge,
   active = false,
   onSelect,
+  buttonLabel,
+  onClick,
   className,
 }) => {
   return (
@@ -31,7 +34,7 @@ const Subscription = ({
           <Price>{price}₽</Price>
           {period && <Period> / {period}</Period>}
         </div>
-        {badge && <Badge>{badge}</Badge>}
+        {badge && <Badge $variant={badge.toLowerCase()}>{badge}</Badge>}
       </HeaderRow>
 
       {title && <Title>{title}</Title>}
@@ -46,8 +49,9 @@ const Subscription = ({
           ))}
         </Features>
       )}
+      {buttonLabel && <CustomButton onClick={onClick}>Приобрести</CustomButton>}
     </Wrapper>
   );
 };
 
-export default Subscription;
+export default Plan;

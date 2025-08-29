@@ -9,11 +9,8 @@ export const Page = styled.div`
   height: 100%;
   background: #f9fcff;
   z-index: 0;
-  background: url(${mainBg}) center center / cover no-repeat;
-  background-size: cover;
-  background-position: center top;
+  background: url(${mainBg}) center top / cover no-repeat;
   flex-shrink: 0;
-  z-index: 0;
 `;
 
 export const Hero = styled.header`

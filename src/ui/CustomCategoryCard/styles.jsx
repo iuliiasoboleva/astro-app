@@ -93,6 +93,26 @@ export const Pill = styled.span`
   color: ${({ $status }) => ($status === 'locked' ? '#848484' : '#4F93C9')};
 `;
 
+export const Price = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  min-height: 28px;
+  padding: 4px 8px;
+  border-radius: 35px;
+  font-family: var(--font-sfpro);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+
+  background:
+    radial-gradient(114.12% 92.74% at 24.44% -17.31%, #435f6e 0%, rgba(31, 53, 65, 0) 100%), #1f3541;
+  color: #fff;
+`;
+
 export const CornerBadge = styled.div`
   justify-self: end;
   z-index: 2;

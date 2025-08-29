@@ -15,6 +15,9 @@ import AstroResult from './pages/AstroResult';
 import AstroSteps from './pages/AstroSteps';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Shop from './pages/Shop';
+import Subscription from './pages/Subscription';
 import TarotRequest from './pages/TarotRequest';
 import TarotResult from './pages/TarotResult';
 import TarotSpread from './pages/TarotSpread';
@@ -56,7 +59,9 @@ export default function App() {
         <Route path="tarot/:id/spread" element={<TarotSpread />} />
         <Route path="tarot/:id/result" element={<TarotResult />} />
         <Route path="archive" element={<Archive />} />
-        <Route path="profile" element={<div>Профиль (заглушка)</div>} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="subscription" element={<Subscription />} />
+        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );

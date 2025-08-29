@@ -20,6 +20,31 @@ export const IconBox = styled.div`
   }
 `;
 
+export const Price = styled.div`
+  color: #4f93c9;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 5px;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const TitleBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Title = styled.h3`
   color: #1f3541;
   text-align: center;
@@ -39,4 +64,13 @@ export const Subtitle = styled.p`
   letter-spacing: -0.3px;
   text-align: center;
   color: #546e7d;
+  white-space: pre-line;
+  max-width: 320px;
+`;
+
+export const ButtonBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 `;

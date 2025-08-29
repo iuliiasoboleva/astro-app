@@ -1,5 +1,20 @@
 import styled, { css } from 'styled-components';
 
+const STATUS_STYLES = {
+  vip: {
+    text: '#D9C2B6',
+    brd: '#D9C2B6',
+  },
+  platinum: {
+    text: '#4F93C9',
+    brd: '#4F93C9',
+  },
+  free: {
+    text: '#546E7D',
+    brd: '#546E7D',
+  },
+};
+
 export const Wrapper = styled.div`
   border-radius: 20px;
   border: 1px solid #e2eaf1;
@@ -10,6 +25,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
 
   ${({ $active }) =>
     $active &&
@@ -54,6 +70,14 @@ export const Badge = styled.span`
   text-transform: uppercase;
   color: #546e7d;
   border: 1px solid #546e7d;
+
+  ${({ $variant }) => {
+    const c = STATUS_STYLES[$variant] ?? STATUS_STYLES.free;
+    return css`
+      color: ${c.text};
+      border: 1px solid ${c.brd};
+    `;
+  }}
 `;
 
 export const Title = styled.h3`

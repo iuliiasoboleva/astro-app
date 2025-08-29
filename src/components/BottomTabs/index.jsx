@@ -7,6 +7,7 @@ import { resetSession } from '../../store/tarotSessionSlice';
 import { Bar, Icon, Item, Label } from './styles';
 
 const CHILD_OF_HOME = ['/tarot', '/astro'];
+const CHILD_OF_PROFILE = ['/profile', '/subscription', '/shop'];
 
 const BottomTabs = ({ items = [], className }) => {
   const location = useLocation();
@@ -39,13 +40,20 @@ const BottomTabs = ({ items = [], className }) => {
       {items.map((it) => {
         const isHome = it.to === '/';
         const isArchiveTab = it.to === '/archive';
+        const isProfileTab = it.to === '/profile';
 
         const isChildOfHome =
           !forceArchiveActive &&
           isHome &&
           (pathname === '/' || CHILD_OF_HOME.some((p) => pathname.startsWith(p)));
 
-        const forceActive = (isHome && isChildOfHome) || (isArchiveTab && forceArchiveActive);
+        const isChildOfProfile =
+          isProfileTab && CHILD_OF_PROFILE.some((p) => pathname.startsWith(p)); // <— NEW
+
+        const forceActive =
+          (isHome && isChildOfHome) ||
+          (isArchiveTab && forceArchiveActive) ||
+          (isProfileTab && isChildOfProfile);
 
         return (
           <Item

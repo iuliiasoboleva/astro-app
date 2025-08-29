@@ -10,8 +10,8 @@ import nameIcon from '../../assets/icons/name.svg';
 import planetBackground from '../../assets/images/planet-background.png';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
+import Plan from '../../components/Plan';
 import ScreenHeader from '../../components/ScreenHeader';
-import Subscription from '../../components/Subscription';
 import { astroCategoryById } from '../../mocks/astroCategories';
 import { astroResume } from '../../mocks/astroResume';
 import { plans } from '../../mocks/tariffs';
@@ -177,7 +177,7 @@ const AstroResult = () => {
 
         <ContentWrapper>
           {plans.map((p) => (
-            <Subscription
+            <Plan
               key={p.id}
               price={p.price}
               period={p.period}

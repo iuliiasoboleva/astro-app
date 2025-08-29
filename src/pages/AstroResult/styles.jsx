@@ -169,6 +169,7 @@ export const QuestionBlock = styled.div`
   border-radius: 15px;
   border: 1px solid #e2eaf1;
   background: #fff;
+  width: 100%;
 `;
 
 export const QuestionTitle = styled.div`

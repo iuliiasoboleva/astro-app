@@ -6,8 +6,8 @@ import cardsIcon from '../../assets/icons/cards.svg';
 import questionIcon from '../../assets/icons/message-chat-circle.svg';
 import BottomSheet from '../../components/BottomSheet';
 import InfoCard from '../../components/InfoCard';
+import Plan from '../../components/Plan';
 import ScreenHeader from '../../components/ScreenHeader';
-import Subscription from '../../components/Subscription';
 import TarotResume from '../../components/TarotResume';
 import { plans } from '../../mocks/tariffs';
 import { tarotCategoryById } from '../../mocks/tarotCategories';
@@ -151,7 +151,7 @@ const TarotResult = () => {
 
         <ContentWrapper>
           {plans.map((p) => (
-            <Subscription
+            <Plan
               key={p.id}
               price={p.price}
               period={p.period}

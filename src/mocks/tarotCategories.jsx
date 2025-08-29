@@ -30,6 +30,7 @@ const raw = [
     subscription: false,
     purchased: false,
     count: 6,
+    price: 990,
   },
   {
     id: 2,
@@ -41,6 +42,7 @@ const raw = [
     subscription: false,
     purchased: false,
     count: 7,
+    price: 990,
   },
   {
     id: 3,
@@ -52,6 +54,7 @@ const raw = [
     subscription: false,
     purchased: false,
     count: 3,
+    price: 990,
   },
   {
     id: 4,
@@ -63,6 +66,7 @@ const raw = [
     subscription: false,
     purchased: false,
     count: 7,
+    price: 990,
   },
   {
     id: 5,
@@ -74,6 +78,7 @@ const raw = [
     subscription: false,
     purchased: true,
     count: 5,
+    price: 990,
   },
   {
     id: 6,
@@ -85,6 +90,7 @@ const raw = [
     subscription: true,
     purchased: false,
     count: 5,
+    price: 990,
   },
   {
     id: 7,
@@ -96,6 +102,7 @@ const raw = [
     subscription: true,
     purchased: false,
     count: 3,
+    price: 990,
   },
   {
     id: 8,
@@ -107,6 +114,7 @@ const raw = [
     subscription: true,
     purchased: false,
     count: 13,
+    price: 990,
   },
   {
     id: 9,
@@ -118,6 +126,7 @@ const raw = [
     subscription: true,
     purchased: false,
     count: 5,
+    price: 990,
   },
   {
     id: 10,
@@ -129,6 +138,7 @@ const raw = [
     subscription: true,
     purchased: false,
     count: 5,
+    price: 990,
   },
 ];
 
