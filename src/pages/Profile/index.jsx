@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import astroIcon from '../../assets/icons/astro-brown.svg';
 import cardsIcon from '../../assets/icons/cards-blue.svg';
 import heartIcon from '../../assets/icons/heart-purple.svg';
-import avatar from '../../assets/images/avatar.png';
+import fallbackAvatar from '../../assets/images/avatar.png';
 import heartBlock from '../../assets/images/heart-block.png';
 import moneyBlock from '../../assets/images/money-block.png';
 import timeBlock from '../../assets/images/time-block.png';
 import BalanceCard from '../../components/BalanceCard';
+import useTelegramUser from '../../hooks/useTelegramUser';
 import { BALANCE_CARDS } from '../../mocks/balanceInfo';
 import CustomStatusUser from '../../ui/CustomStatusUser';
 import {
@@ -67,18 +68,19 @@ const items = [
 
 const Profile = () => {
   const navigate = useNavigate();
+  const tgUser = useTelegramUser();
 
   const onTileClick = (item) => {
-    if (item.id === 'sub') {
-      navigate('/subscription');
-    }
-    if (item.id === 'shop') {
-      navigate('/shop');
-    }
-    if (item.id === 'gift') {
-      /* navigate('/gift') */
-    }
+    if (item.id === 'sub') navigate('/subscription');
+    if (item.id === 'shop') navigate('/shop');
+    if (item.id === 'gift') navigate('/referral');
   };
+
+  const nameToShow = tgUser?.name || 'Лиза Васина';
+  const usernameToShow = tgUser?.username || '@liza';
+  const avatarSrc = tgUser?.photoUrl || fallbackAvatar;
+
+  const status = tgUser?.isPremium ? 'vip' : undefined;
 
   return (
     <Page>
@@ -87,13 +89,15 @@ const Profile = () => {
           <Name>астро-приложение • ЛИЗА ВАСИНА</Name>
           <MainTitle>Что скажут карты?</MainTitle>
         </TitleBlock>
-        <Avatar src={avatar} alt="" />
+        <Avatar src={avatarSrc} alt="" referrerPolicy="no-referrer" />
       </Hero>
+
       <MainWrapper>
         <NameBlock>
-          <CustomStatusUser name={'Лиза Васина'} status={'vip'} />
-          <Nickname>@liza</Nickname>
+          <CustomStatusUser name={nameToShow} status={status} />
+          <Nickname>{usernameToShow}</Nickname>
         </NameBlock>
+
         <BalanceGrid>
           {BALANCE_CARDS.map((it) => (
             <BalanceCard
@@ -105,15 +109,17 @@ const Profile = () => {
             />
           ))}
         </BalanceGrid>
+
         <MainSubtitle>Получите бесплатный расклад</MainSubtitle>
         <Promoblock>
           <p>NEWYEAR2026</p>
           <button>Применить</button>
         </Promoblock>
+
         <Grid>
-          {items.map((it, i) => (
+          {items.map((it) => (
             <Tile
-              key={it.id || i}
+              key={it.id}
               $size={it.size || 's'}
               $bgImage={it.bg}
               onClick={() => onTileClick(it)}

@@ -7,7 +7,7 @@ import { resetSession } from '../../store/tarotSessionSlice';
 import { Bar, Icon, Item, Label } from './styles';
 
 const CHILD_OF_HOME = ['/tarot', '/astro'];
-const CHILD_OF_PROFILE = ['/profile', '/subscription', '/shop'];
+const CHILD_OF_PROFILE = ['/profile', '/subscription', '/shop', '/referral'];
 
 const BottomTabs = ({ items = [], className }) => {
   const location = useLocation();

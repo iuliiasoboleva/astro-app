@@ -21,6 +21,7 @@ export default defineConfig({
 
   server: {
     host: true,
+    allowedHosts: [".trycloudflare.com"],
     headers: {
       "Cache-Control": "public, max-age=31536000, immutable",
     },

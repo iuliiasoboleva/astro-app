@@ -16,6 +16,7 @@ import AstroSteps from './pages/AstroSteps';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Referral from './pages/Referral';
 import Shop from './pages/Shop';
 import Subscription from './pages/Subscription';
 import TarotRequest from './pages/TarotRequest';
@@ -62,6 +63,7 @@ export default function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="subscription" element={<Subscription />} />
         <Route path="shop" element={<Shop />} />
+        <Route path="referral" element={<Referral />} />
       </Route>
     </Routes>
   );
