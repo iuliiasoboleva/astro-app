@@ -23,6 +23,7 @@ import TarotRequest from './pages/TarotRequest';
 import TarotResult from './pages/TarotResult';
 import TarotSpread from './pages/TarotSpread';
 import { AppWrap, Content } from './styles';
+import { ToastProvider } from './ui/CustomToast';
 
 const TABS = [
   { to: '/', label: 'Главная', icon: homeIcon },
@@ -48,23 +49,25 @@ function Layout() {
 }
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="tarot" element={<Categories cards={tarotCategories} />} />
-        <Route path="astro" element={<Categories cards={astroCategories} />} />
-        <Route path="astro/:id" element={<AstroRequest />} />
-        <Route path="astro/:id/steps" element={<AstroSteps />} />
-        <Route path="astro/:id/result" element={<AstroResult />} />
-        <Route path="tarot/:id" element={<TarotRequest />} />
-        <Route path="tarot/:id/spread" element={<TarotSpread />} />
-        <Route path="tarot/:id/result" element={<TarotResult />} />
-        <Route path="archive" element={<Archive />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="subscription" element={<Subscription />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="referral" element={<Referral />} />
-      </Route>
-    </Routes>
+    <ToastProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="tarot" element={<Categories cards={tarotCategories} />} />
+          <Route path="astro" element={<Categories cards={astroCategories} />} />
+          <Route path="astro/:id" element={<AstroRequest />} />
+          <Route path="astro/:id/steps" element={<AstroSteps />} />
+          <Route path="astro/:id/result" element={<AstroResult />} />
+          <Route path="tarot/:id" element={<TarotRequest />} />
+          <Route path="tarot/:id/spread" element={<TarotSpread />} />
+          <Route path="tarot/:id/result" element={<TarotResult />} />
+          <Route path="archive" element={<Archive />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="subscription" element={<Subscription />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="referral" element={<Referral />} />
+        </Route>
+      </Routes>
+    </ToastProvider>
   );
 }

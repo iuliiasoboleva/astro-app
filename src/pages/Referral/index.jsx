@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 import arrowBack from '../../assets/icons/arrow-back.svg';
 import copyIcon from '../../assets/icons/copy.svg';
+import pasteIcon from '../../assets/icons/paste.svg';
 import shareIcon from '../../assets/icons/share.svg';
 import igBg from '../../assets/images/instagram.png';
 import rubleIcon from '../../assets/images/ruble-circle.png';
 import tgBg from '../../assets/images/telegram.png';
+import BannerCard from '../../components/BannerCard';
 import { plural } from '../../helpers/pluralEndWords';
+import { BANNERS } from '../../mocks/banners';
 import { MOCK_INVITES, REF_CODE } from '../../mocks/invites';
 import CustomButton from '../../ui/CustomButton';
+import { useToast } from '../../ui/CustomToast';
 import { openExternal } from '../../utils/telegram';
 import {
   ActionBtn,
@@ -20,12 +24,15 @@ import {
   Code,
   Content,
   Divider,
+  IconBtn,
   Image,
   InviteRow,
   Label,
   ListHeader,
   Page,
   PromoBox,
+  PromoInput,
+  PromoInputWrap,
   PromoRow,
   Reward,
   SoftBlock,
@@ -39,8 +46,24 @@ import {
 
 const Referral = () => {
   const navigate = useNavigate();
+  const toast = useToast();
+
   const [copied, setCopied] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [status, setStatus] = useState('subscribed');
+  const [promoInput, setPromoInput] = useState('');
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) setPromoInput(text.trim());
+    } catch (e) {
+      // фолбэк при отсутствии permissions API можно просто сфокусировать инпут и дать пользователю Cmd/Ctrl+V
+      console.warn('clipboard read failed', e);
+    }
+  };
+
+  const banner = BANNERS[status];
 
   const visibleInvites = useMemo(
     () => (showAll ? MOCK_INVITES : MOCK_INVITES.slice(0, 4)),
@@ -51,6 +74,7 @@ const Referral = () => {
     try {
       await navigator.clipboard.writeText(REF_CODE);
       setCopied(true);
+      toast.success('Код скопирован');
       setTimeout(() => setCopied(false), 2000);
     } catch (e) {
       const ta = document.createElement('textarea');
@@ -59,7 +83,9 @@ const Referral = () => {
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
+
       setCopied(true);
+      toast.success('Код скопирован');
       setTimeout(() => setCopied(false), 2000);
     }
   };
@@ -81,110 +107,130 @@ const Referral = () => {
   };
 
   return (
-    <Page>
-      <TitleBlock>
-        <img src={arrowBack} alt="Назад" onClick={handleBack} style={{ cursor: 'pointer' }} />
-        <TopTitle>Бесплатные расклады</TopTitle>
-      </TitleBlock>
+    <>
+      {/* пример использования баннера, в данном месте можно удалить */}
+      {/* {banner && (
+                <BannerCard
+                    {...banner}
+                    onClose={() => setStatus(null)}
+                />
+            )} */}
 
-      <SoftBlock>
-        <TitleWrapper>
-          <Image src={rubleIcon} alt="" />
-          <Text>
-            Приглашайте друзей в «Что скажут карты?» — друзьям первый бесплатный расклад в подарок,
-            а вам 1 расклад за каждого друга.
-          </Text>
-        </TitleWrapper>
+      <Page>
+        <TitleBlock>
+          <img src={arrowBack} alt="Назад" onClick={handleBack} style={{ cursor: 'pointer' }} />
+          <TopTitle>Бесплатные расклады</TopTitle>
+        </TitleBlock>
 
-        {/* Блок промокода */}
-        <Card>
-          <Label>Ваш реферальный промокод</Label>
-          <PromoRow>
-            <PromoBox $copied={copied}>
-              <Code>{REF_CODE}</Code>
-              <img
-                onClick={handleCopy}
-                aria-label="Скопировать промокод"
-                src={copyIcon}
-                alt=""
-                width={14}
-                height={14}
-                style={{ cursor: 'pointer' }}
-              />
-            </PromoBox>
-          </PromoRow>
+        <SoftBlock>
+          <TitleWrapper>
+            <Image src={rubleIcon} alt="" />
+            <Text>
+              Приглашайте друзей в «Что скажут карты?» — друзьям первый бесплатный расклад в
+              подарок, а вам 1 расклад за каждого друга.
+            </Text>
+          </TitleWrapper>
 
-          <CustomButton leftIcon={<img src={shareIcon} alt="" />} onClick={shareToTelegram}>
-            Поделиться промокодом
-          </CustomButton>
-        </Card>
+          {/* Блок промокода */}
+          <Card>
+            <Label>Ваш реферальный промокод</Label>
+            <PromoRow>
+              <PromoBox $copied={copied}>
+                <Code>{REF_CODE}</Code>
+                <img
+                  onClick={handleCopy}
+                  aria-label="Скопировать промокод"
+                  src={copyIcon}
+                  alt=""
+                  width={14}
+                  height={14}
+                  style={{ cursor: 'pointer' }}
+                />
+              </PromoBox>
+              {/* <PromoInputWrap>
+                                <PromoInput
+                                    placeholder="Введите промокод"
+                                    value={promoInput}
+                                    onChange={(e) => setPromoInput(e.target.value)}
+                                />
+                                <IconBtn type="button" onClick={handlePaste} aria-label="Вставить промокод">
+                                    <img src={pasteIcon} alt="" width={14} height={14} />
+                                </IconBtn>
+                            </PromoInputWrap> */}
+            </PromoRow>
 
-        <Card>
-          <ListHeader>
-            Уже приглашено {MOCK_INVITES.length}{' '}
-            {plural(MOCK_INVITES.length, ['друг', 'друга', 'друзей'])}
-          </ListHeader>
-          <Subnote>
-            Вы получили {MOCK_INVITES.length}{' '}
-            {plural(MOCK_INVITES.length, ['расклад', 'расклада', 'раскладов'])}
-          </Subnote>
+            <CustomButton leftIcon={<img src={shareIcon} alt="" />} onClick={shareToTelegram}>
+              Поделиться промокодом
+            </CustomButton>
+          </Card>
 
-          {visibleInvites.map((it, i) => (
-            <React.Fragment key={`${it.username}-${i}`}>
-              <InviteRow>
-                <div className="user">{it.username}</div>
-                <div className="date">{it.date}</div>
-              </InviteRow>
-              {i !== visibleInvites.length - 1 && <Divider />}
-            </React.Fragment>
-          ))}
+          <Card>
+            <ListHeader>
+              Уже приглашено {MOCK_INVITES.length}{' '}
+              {plural(MOCK_INVITES.length, ['друг', 'друга', 'друзей'])}
+            </ListHeader>
+            <Subnote>
+              Вы получили {MOCK_INVITES.length}{' '}
+              {plural(MOCK_INVITES.length, ['расклад', 'расклада', 'раскладов'])}
+            </Subnote>
 
-          <CustomButton
-            onClick={() => setShowAll(true)}
-            disabled={showAll}
-            aria-disabled={showAll}
-            style={{ marginTop: '20px' }}
-          >
-            {showAll ? 'Все приглашения уже показаны' : 'Смотреть все приглашения'}
-          </CustomButton>
-        </Card>
+            {visibleInvites.map((it, i) => (
+              <React.Fragment key={`${it.username}-${i}`}>
+                <InviteRow>
+                  <div className="user">{it.username}</div>
+                  <div className="date">{it.date}</div>
+                </InviteRow>
+                {i !== visibleInvites.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
 
-        <BottomTitle>
-          Выполняйте задания
-          <br />и получайте бесплатные расклады!
-        </BottomTitle>
+            <CustomButton
+              onClick={() => setShowAll(true)}
+              disabled={showAll}
+              aria-disabled={showAll}
+              style={{ marginTop: '20px' }}
+            >
+              {showAll ? 'Все приглашения уже показаны' : 'Смотреть все приглашения'}
+            </CustomButton>
+          </Card>
 
-        <BottomCards>
-          <BottomCard
-            $bg={tgBg}
-            $borderColor="#D7E7F6"
-            onClick={() => openExternal('https://t.me/yourchannel')}
-          >
-            <Content>
-              <div>
-                <Title>Подписаться на Telegram-канал Лизы Васиной</Title>
-                <Reward>Награда: x1 расклад Таро на выбор</Reward>
-              </div>
-              <ActionBtn $color="#4F93C9">Перейти к выполнению</ActionBtn>
-            </Content>
-          </BottomCard>
+          <BottomTitle>
+            Выполняйте задания
+            <br />и получайте бесплатные расклады!
+          </BottomTitle>
 
-          <BottomCard
-            $bg={igBg}
-            $borderColor="#F3DDD1"
-            onClick={() => openExternal('https://instagram.com/yourchannel')}
-          >
-            <Content>
-              <div>
-                <Title>Подписаться на Instagram Лизы Васиной</Title>
-                <Reward>Награда: x1 расклад Таро на выбор</Reward>
-              </div>
-              <ActionBtn $color="#B08E7E">Перейти к выполнению</ActionBtn>
-            </Content>
-          </BottomCard>
-        </BottomCards>
-      </SoftBlock>
-    </Page>
+          <BottomCards>
+            <BottomCard
+              $bg={tgBg}
+              $borderColor="#D7E7F6"
+              onClick={() => openExternal('https://t.me/yourchannel')}
+            >
+              <Content>
+                <div>
+                  <Title>Подписаться на Telegram-канал Лизы Васиной</Title>
+                  <Reward>Награда: x1 расклад Таро на выбор</Reward>
+                </div>
+                <ActionBtn $color="#4F93C9">Перейти к выполнению</ActionBtn>
+              </Content>
+            </BottomCard>
+
+            <BottomCard
+              $bg={igBg}
+              $borderColor="#F3DDD1"
+              onClick={() => openExternal('https://instagram.com/yourchannel')}
+            >
+              <Content>
+                <div>
+                  <Title>Подписаться на Instagram Лизы Васиной</Title>
+                  <Reward>Награда: x1 расклад Таро на выбор</Reward>
+                </div>
+                <ActionBtn $color="#B08E7E">Перейти к выполнению</ActionBtn>
+              </Content>
+            </BottomCard>
+          </BottomCards>
+        </SoftBlock>
+      </Page>
+    </>
   );
 };
 

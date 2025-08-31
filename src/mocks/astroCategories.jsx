@@ -31,7 +31,7 @@ const raw = [
     free: true,
     subscription: false,
     purchased: false,
-    price: 990,
+    price: 1990,
   },
   {
     id: 2,
@@ -53,7 +53,7 @@ const raw = [
     free: false,
     subscription: false,
     purchased: false,
-    price: 990,
+    price: 2990,
   },
   {
     id: 4,
@@ -75,7 +75,7 @@ const raw = [
     free: false,
     subscription: false,
     purchased: true,
-    price: 990,
+    price: 2990,
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const raw = [
     free: false,
     subscription: true,
     purchased: false,
-    price: 990,
+    price: 2990,
   },
   {
     id: 7,
@@ -108,7 +108,7 @@ const raw = [
     free: false,
     subscription: true,
     purchased: false,
-    price: 990,
+    price: 1990,
   },
   {
     id: 9,

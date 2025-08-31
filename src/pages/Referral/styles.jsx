@@ -91,6 +91,45 @@ export const PromoRow = styled.div`
   margin: 12px 0 10px;
 `;
 
+export const PromoInputWrap = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const PromoInput = styled.input`
+  width: 100%;
+  height: 58px;
+  border-radius: 8px;
+  border: 1px solid #e2eaf1;
+  background: #fff;
+  padding: 14px 40px 14px 15px;
+  color: #1f3541;
+  font-family: var(--font-sfpro);
+  font-size: 16px;
+  line-height: 19.2px;
+  letter-spacing: -0.48px;
+
+  &::placeholder {
+    color: #9cb0bc;
+  }
+`;
+
+export const IconBtn = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
 export const PromoBox = styled.div`
   position: relative;
   flex: 1;
