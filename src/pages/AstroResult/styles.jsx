@@ -42,6 +42,7 @@ export const ResumeWrapper = styled.div`
   background: #fff;
   margin-bottom: 10px;
   margin-top: 40px;
+  width: 100%;
 `;
 
 export const Title = styled.h3`
@@ -134,6 +135,7 @@ export const TopBlock = styled.div`
 export const Image = styled.img`
   width: 100%;
   height: 100%;
+  max-width: 360px;
 `;
 
 export const InfoBlock = styled.div`

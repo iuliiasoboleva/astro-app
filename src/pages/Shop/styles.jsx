@@ -14,7 +14,7 @@ export const TopTitle = styled.h2`
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  background: url(${topBg}) top center / contain no-repeat;
+  background: url(${topBg}) top center / cover no-repeat;
 `;
 
 export const TitleBlock = styled.header`

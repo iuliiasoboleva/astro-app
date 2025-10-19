@@ -9,6 +9,7 @@ export const TopTitle = styled.h2`
   font-weight: 500;
   line-height: 28.8px;
   letter-spacing: -0.72px;
+  margin-left: 40px;
 `;
 
 export const Page = styled.div`

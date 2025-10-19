@@ -5,7 +5,6 @@ import mainBg from '../../assets/images/main-background.png';
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   height: 100%;
   background: #f9fcff;
   z-index: 0;

@@ -14,8 +14,10 @@ export const Wrapper = styled.div`
 
 export const BackgroundImage = styled.div`
   position: relative;
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   height: 260px;
+  align-self: center;
   border-radius: 10px;
   flex-shrink: 0;
   overflow: hidden;

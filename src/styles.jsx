@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const TAB_BAR_HEIGHT = 84;
 
 export const AppWrap = styled.div`
-  max-width: 420px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

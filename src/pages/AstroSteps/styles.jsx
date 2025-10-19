@@ -184,7 +184,7 @@ export const BackgroundImage = styled.div`
       background-image: url(${props.$bg});
       background-repeat: no-repeat;
       background-position: ${props.$bgPos || 'center center'};
-      background-size: 100%;
+      background-size: contain;
     `}
 
   overflow: hidden;

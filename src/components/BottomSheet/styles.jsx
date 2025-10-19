@@ -47,7 +47,6 @@ export const Sheet = styled.section`
   bottom: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 420px;
 
   background: #fff;
   border-radius: 35px 35px 0 0;

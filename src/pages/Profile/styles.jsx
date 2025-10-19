@@ -5,7 +5,6 @@ import profileBg from '../../assets/images/profile-background.png';
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   height: 100%;
   background: linear-gradient(180deg, #f9fcff 0%, #fff 100%), #f9fcff;
   z-index: 0;

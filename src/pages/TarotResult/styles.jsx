@@ -42,6 +42,7 @@ export const ResumeWrapper = styled.div`
   background: #fff;
   margin-bottom: 10px;
   margin-top: 40px;
+  width: 100%;
 `;
 
 export const CardsRow = styled.div`

@@ -10,7 +10,6 @@ export const Bar = styled.nav`
   z-index: 1000;
   margin: 0 auto;
   width: 100%;
-  max-width: 420px;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);

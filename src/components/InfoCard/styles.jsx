@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 15px;
+  height: 100%;
 `;
 
 export const IconBox = styled.div`
